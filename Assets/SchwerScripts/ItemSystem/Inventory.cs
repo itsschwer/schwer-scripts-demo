@@ -1,85 +1,92 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Schwer.ItemSystem {
-    public class Inventory {
-        public Dictionary<Item, int> contents = new Dictionary<Item, int>();
+    public class Inventory : IDictionary<Item, int> {
+        public event Action<Item, int> OnContentsChanged;
 
-        /// <summary>
-        /// Changes the count of an item by `amount`. Accepts positive and negative values.
-        /// Removes an item from the inventory if there is less than one of it.
-        /// </summary>
-        public void ChangeItemCount(Item item, int amount) {
-            if (contents.ContainsKey(item)) {
-                contents[item] += amount;
+        // Reference for custom `Dictionary`-like behaviour:
+        // https://stackoverflow.com/questions/6250706/override-dictionary-add
+        private IDictionary<Item, int> backingDictionary;
 
-                if (contents[item] <= 0) {
-                    contents.Remove(item);
+        #region IDictionary properties
+        public int this[Item key] {
+            get {
+                // https://stackoverflow.com/questions/14150508/how-to-get-null-instead-of-the-keynotfoundexception-accessing-dictionary-value-b
+                return backingDictionary.TryGetValue(key, out int result) ? result : 0;
+                // return backingDictionary[key];
+            }
+            set {
+                var prevValue = backingDictionary[key];
+
+                backingDictionary[key] = value;
+                if (backingDictionary[key] <= 0) {
+                    backingDictionary.Remove(key);
+                }
+
+                if (backingDictionary[key] != prevValue) {
+                    OnContentsChanged?.Invoke(key, backingDictionary[key]);
                 }
             }
-            else if (amount > 0){
-                contents[item] = amount;
-            }
         }
 
-        /// <summary>
-        /// Directly sets the count of an item.
-        /// </summary>
-        public void SetItem(Item item, int count) => contents[item] = count;
+        #region IDictionary properties (default behaviour)
+        public ICollection<Item> Keys => backingDictionary.Keys;
+        public ICollection<int> Values => backingDictionary.Values;
+        public int Count => backingDictionary.Count;
+        public bool IsReadOnly => backingDictionary.IsReadOnly;
+        #endregion
+        #endregion
 
-        /// <summary>
-        /// Removes an item from the inventory.
-        /// <para>
-        /// Returns `true` if the inventory has the item and successfully removes it. Otherwise returns `false`.
-        /// </para>
-        /// </summary>
-        public bool RemoveItem(Item item) => contents.Remove(item);
-
-        /// <summary>
-        /// Checks if the inventory has a specified amount of an item.
-        /// </summary>
-        public bool CheckItem(Item item, int count) {
-            if (contents.ContainsKey(item)) {
-                return contents[item] >= count;
-            }
-            return false;
-        }
+        public Inventory() => backingDictionary = new Dictionary<Item, int>();
+        public Inventory(Inventory inventory) => backingDictionary = new Dictionary<Item, int>(inventory);
 
         /// <summary>
         /// Returns this `Inventory` as a `SerializableInventory` for saving.
         /// <para>
-        /// Depends on item ids so item ids should not be changed after build release.
+        /// Depends on `Item.id`s to be deserialized, so `Item.id`s should not be changed after a build has been released.
         /// </para>
         /// </summary>
         public SerializableInventory Serialize() {
             var result = new SerializableInventory();
-            foreach (var entry in contents) {
+            foreach (var entry in this) {
                 if (entry.Value > 0) {
-                    result.contents[entry.Key.id] = entry.Value;
+                    result[entry.Key.id] = entry.Value;
                 }
             }
             return result;
         }
+
+        #region IDictionary methods (default behaviour)
+        public void Add(Item key, int value) => backingDictionary.Add(key, value);
+        public bool ContainsKey(Item key) => backingDictionary.ContainsKey(key);
+        public bool Remove(Item key) => backingDictionary.Remove(key);
+        public bool TryGetValue(Item key, out int value) => backingDictionary.TryGetValue(key, out value);
+        public void Add(KeyValuePair<Item, int> item) => backingDictionary.Add(item);
+        public void Clear() => backingDictionary.Clear();
+        public bool Contains(KeyValuePair<Item, int> item) => backingDictionary.Contains(item);
+        public void CopyTo(KeyValuePair<Item, int>[] array, int arrayIndex) => backingDictionary.CopyTo(array, arrayIndex);
+        public bool Remove(KeyValuePair<Item, int> item) => backingDictionary.Remove(item.Key);
+        public IEnumerator<KeyValuePair<Item, int>> GetEnumerator() => backingDictionary.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => backingDictionary.GetEnumerator();
+        #endregion
     }
 
     [System.Serializable]
-    public class SerializableInventory {
+    public sealed class SerializableInventory : Dictionary<int, int> {
         /// <summary>
-        /// Represents an inventory in the form &lt;item id, item count&gt;.
-        /// </summary>
-        public Dictionary<int, int> contents { get; private set; } = new Dictionary<int, int>();
-
-        /// <summary>
-        /// Returns a deserialized `Inventory` using an `ItemDatabase`.
+        /// Returns this `SerializableInventory` as an `Inventory` using an `ItemDatabase` for deserialization.
         /// <para>
-        /// Depends on item ids so item ids should not be changed after build release.
+        /// Deserialization depends on `Item.id`s, so `Item.id`s should not be changed after a build has been released.
         /// </para>
         /// </summary>
         public Inventory Deserialize(ItemDatabase itemDatabase) {
             var result = new Inventory();
-            foreach (var entry in contents) {
+            foreach (var entry in this) {
                 var itemSO = itemDatabase.GetItem(entry.Key);
                 if (itemSO != null) {
-                    result.contents[itemSO] = entry.Value;
+                    result[itemSO] = entry.Value;
                 }
             }
             return result;
