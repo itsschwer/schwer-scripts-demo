@@ -203,6 +203,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1406445828}
+  - component: {fileID: 1406445833}
   - component: {fileID: 1406445832}
   - component: {fileID: 1406445831}
   - component: {fileID: 1406445830}
@@ -342,3 +343,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1406445833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406445827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3022a2ef0c2516942931eaa7a172503a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
