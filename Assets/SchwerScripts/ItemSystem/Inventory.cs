@@ -11,6 +11,11 @@ namespace Schwer.ItemSystem {
         private IDictionary<Item, int> backingDictionary;
 
         #region IDictionary properties
+        /// <summary>
+        /// Gets or sets the count of the specified `Item`.
+        /// <para/> Set removes the `Item` if its value is set to 0 or below.
+        /// <para/> Get returns 0 if the `Item` is not found.
+        /// </summary>
         public int this[Item key] {
             get {
                 // https://stackoverflow.com/questions/14150508/how-to-get-null-instead-of-the-keynotfoundexception-accessing-dictionary-value-b
