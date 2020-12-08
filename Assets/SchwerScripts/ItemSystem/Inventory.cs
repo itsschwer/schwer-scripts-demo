@@ -18,15 +18,15 @@ namespace Schwer.ItemSystem {
                 // return backingDictionary[key];
             }
             set {
-                var prevValue = backingDictionary[key];
+                var prevValue = this[key];
 
                 backingDictionary[key] = value;
                 if (backingDictionary[key] <= 0) {
                     backingDictionary.Remove(key);
                 }
 
-                if (backingDictionary[key] != prevValue) {
-                    OnContentsChanged?.Invoke(key, backingDictionary[key]);
+                if (this[key] != prevValue) {
+                    OnContentsChanged?.Invoke(key, this[key]);
                 }
             }
         }
