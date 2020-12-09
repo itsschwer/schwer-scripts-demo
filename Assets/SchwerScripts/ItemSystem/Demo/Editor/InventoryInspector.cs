@@ -7,8 +7,8 @@ namespace SchwerEditor.ItemSystem {
 
     [CustomEditor(typeof(InventorySO))]
     public class InventoryDemo : Editor {
-        private Item item;
-        private int amount = 1;
+        private static Item item;
+        private static int amount = 1;
 
         public override void OnInspectorGUI() {
             var inventory = (InventorySO)target;
@@ -34,44 +34,42 @@ namespace SchwerEditor.ItemSystem {
             item = (Item)EditorGUILayout.ObjectField("Item", item, typeof(Item), false);
             amount = EditorGUILayout.IntField("Amount", amount);
 
-            if (GUILayout.Button("Check")) {
-                if (item != null) {
-                    if (inventory.value[item] >= amount) {
-                        Debug.Log("'" + inventory.name + "' has " + amount + " or more of '" + item.name +"'.");
-                    }
-                    else {
-                        Debug.Log("'" + inventory.name + "' has less than " + amount + " of '" + item.name +"'.");
-                    }
+            var invName = "'" + inventory.name + "'";
+            var itemName = "'" + ((item != null) ? item.name : "(Item)") + "'";
+
+            EditorGUI.BeginDisabledGroup(item == null);
+            if (GUILayout.Button("Check for " + itemName)) {
+                Debug.Log(invName + " has " + inventory.value[item] + "x of " + itemName + ".");
+            }
+            if (GUILayout.Button("Check " + itemName + " >= " + amount)) {
+                if (inventory.value[item] >= amount) {
+                    Debug.Log(invName + " has " + amount + " or more of " + itemName + ".");
+                }
+                else {
+                    Debug.Log("" + invName + " has less than " + amount + " of " + itemName + ".");
                 }
             }
-            if (GUILayout.Button("Set")) {
-                if (item != null) {
-                    inventory.value[item] = amount;
-                    Debug.Log("Set '" + inventory.name + "' '" + item.name + "' count to " + amount + ".");
+            if (GUILayout.Button("Set " + itemName + " to " + amount + "x")) {
+                inventory.value[item] = amount;
+                Debug.Log("Set " + invName + " " + itemName + " to " + amount + "x.");
+            }
+            if (GUILayout.Button("Add " + amount + "x " + itemName)) {
+                inventory.value[item] += amount;
+                Debug.Log("Added " + amount + "x " + itemName + " to " + invName + ".");
+            }
+            if (GUILayout.Button("Subtract " + amount + "x " + itemName)) {
+                inventory.value[item] -= amount;
+                Debug.Log("Removed " + amount + "x " + itemName + " from " + invName + ".");
+            }
+            if (GUILayout.Button("Remove all of " + itemName)) {
+                if (inventory.value.Remove(item)) {
+                    Debug.Log("Removed all of " + itemName + " from " + invName + ".");
+                }
+                else {
+                    Debug.Log(invName + " does not have any of " + itemName + " to remove.");
                 }
             }
-            if (GUILayout.Button("Add")) {
-                if (item != null) {
-                    inventory.value[item] += amount;
-                    Debug.Log("Added " + amount + "x '" + item.name + "' to '" + inventory.name + "'.");
-                }
-            }
-            if (GUILayout.Button("Remove")) {
-                if (item != null) {
-                    inventory.value[item] -= amount;
-                    Debug.Log("Removed " + amount + "x '" + item.name + "' from '" + inventory.name + "'.");
-                }
-            }
-            if (GUILayout.Button("Clear")) {
-                if (item != null) {
-                    if (inventory.value.Remove(item)) {
-                        Debug.Log("Cleared '" + item.name + "' from '" + inventory.name + "'.");
-                    }
-                    else {
-                        Debug.Log("'" + inventory.name + "' does not have any of '" + item.name + "'.");
-                    }
-                }
-            }
+            EditorGUI.EndDisabledGroup();
 
             EditorGUILayout.EndVertical();
         }
