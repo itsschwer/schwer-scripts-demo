@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace SchwerEditor.ItemSystem {
     using Schwer.ItemSystem;
-    using Schwer.ItemSystem.Demo;
 
     [CustomEditor(typeof(InventorySO))]
     public class InventoryDemo : Editor {
