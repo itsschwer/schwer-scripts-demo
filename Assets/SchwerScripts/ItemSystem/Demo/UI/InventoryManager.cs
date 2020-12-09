@@ -25,6 +25,7 @@ namespace Schwer.ItemSystem.Demo {
                 slot.manager = this;
             }
 
+            UpdateDisplay(null);
             if (inventory != null) {
                 UpdateSlots();
             }
