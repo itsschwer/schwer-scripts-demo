@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Schwer.ItemSystem.Demo
-{
-    public class ItemSlot : MonoBehaviour {
-        public Item item { get; private set; }
+namespace Schwer.ItemSystem.Demo {
+    public class ItemSlot : MonoBehaviour, ISelectHandler {
         [Header("Components")]
         [SerializeField] private Image slot = default;
         [SerializeField] private Image sprite = default;
         [SerializeField] private Text count = default;
+
+        public InventoryManager manager { get; set; }
+        public Item item { get; private set; }
 
         public void SetItem(Item item, int itemCount) {
             this.item = item;
@@ -28,5 +30,7 @@ namespace Schwer.ItemSystem.Demo
             sprite.sprite = null;
             count.text = "";
         }
+
+        public void OnSelect(BaseEventData eventData) => manager?.UpdateDisplay(item);
     }
 }
