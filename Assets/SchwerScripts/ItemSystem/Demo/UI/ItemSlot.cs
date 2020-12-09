@@ -5,7 +5,6 @@ using UnityEngine.UI;
 namespace Schwer.ItemSystem.Demo {
     public class ItemSlot : MonoBehaviour, ISelectHandler {
         [Header("Components")]
-        [SerializeField] private Image slot = default;
         [SerializeField] private Image sprite = default;
         [SerializeField] private Text count = default;
 
