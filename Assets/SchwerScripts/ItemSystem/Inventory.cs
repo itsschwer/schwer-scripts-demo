@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Schwer.ItemSystem {
     public class Inventory : IDictionary<Item, int> {
@@ -78,8 +79,14 @@ namespace Schwer.ItemSystem {
         #endregion
     }
 
-    [System.Serializable]
+    [Serializable]
     public sealed class SerializableInventory : Dictionary<int, int> {
+        public SerializableInventory() {}
+        private SerializableInventory(SerializationInfo information, StreamingContext context) : base(information,context) {}
+        // ^ Need to add special constructor for deserialization (since `Dictionary` implements `ISerializable`) to avoid
+        // SerializationException : The constructor to deserialize an object of type [...] was not found
+        // (Life-saver!) https://www.limilabs.com/blog/dictionary-serializationexception
+
         /// <summary>
         /// Returns this `SerializableInventory` as an `Inventory` using an `ItemDatabase` for deserialization.
         /// <para>
