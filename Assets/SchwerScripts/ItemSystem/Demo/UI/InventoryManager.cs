@@ -15,7 +15,11 @@ namespace Schwer.ItemSystem.Demo {
 
         private List<ItemSlot> itemSlots = new List<ItemSlot>();
 
-        private void OnEnable() => inventory.OnContentsChanged += UpdateSlots;
+        private void OnEnable() {
+            inventory.OnContentsChanged += UpdateSlots;
+            Initialise();
+        }
+
         private void OnDisable() => inventory.OnContentsChanged -= UpdateSlots;
 
         private void Awake() {
@@ -24,7 +28,9 @@ namespace Schwer.ItemSystem.Demo {
             foreach (var slot in itemSlots) {
                 slot.manager = this;
             }
+        }
 
+        private void Initialise() {
             UpdateDisplay(null);
             if (inventory != null) {
                 UpdateSlots();
