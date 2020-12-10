@@ -6,7 +6,6 @@ public abstract class Actor : MonoBehaviour {
     protected Animator animator;
 
     protected ActorInput input;
-    public State state { get; protected set; }
 
     protected virtual void Awake() {
         transform = GetComponent<Transform>();
@@ -23,10 +22,5 @@ public abstract class Actor : MonoBehaviour {
             animator.SetFloat("X", direction.x);
             animator.SetFloat("Y", direction.y);
         }
-    }
-
-    public enum State {
-        Free,
-        Attack
     }
 }

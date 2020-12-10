@@ -6,17 +6,11 @@ public abstract class Character : Actor {
     protected virtual void Update() {
         GetInput();
 
-        if (state == State.Free) {
-            SetAnimationXY(input.direction);
-            animator.SetBool("Moving", (input.direction != Vector2.zero));
-        }
+        SetAnimationXY(input.direction);
+        animator.SetBool("Moving", (input.direction != Vector2.zero));
     }
 
     protected abstract void GetInput();
 
-    protected virtual void FixedUpdate() {
-        if (state == State.Free) {
-            rigidbody.MovePosition(transform.position + (Vector3)(input.direction.normalized * speed * Time.deltaTime));
-        }
-    }
+    protected virtual void FixedUpdate() => rigidbody.MovePosition(transform.position + (Vector3)(input.direction.normalized * speed * Time.deltaTime));
 }
