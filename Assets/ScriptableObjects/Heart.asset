@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 1
   _name: Heart
-  _description: Hearts, but no health to use for.
+  _description: Hearts, but no health to use them for.
   _sprite: {fileID: 21300012, guid: 872079738df58a54985afcba6cfa3f2b, type: 3}
   _stackable: 1
