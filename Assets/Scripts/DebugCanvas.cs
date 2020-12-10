@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DebugCanvas : MonoBehaviourSingleton<DebugCanvas> {
@@ -24,6 +25,10 @@ public class DebugCanvas : MonoBehaviourSingleton<DebugCanvas> {
     }
 
     private void Update() {
+        if (Input.GetKeyDown(KeyCode.R)) {
+            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        }
+
         if (Application.platform != RuntimePlatform.WebGLPlayer) {
             if (Input.GetButton("Cancel")) {
                 quitLog.canvasRenderer.SetAlpha(1); // Need to set to non-zero, since fading in from zero seems buggy
