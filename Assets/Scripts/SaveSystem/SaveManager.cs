@@ -1,25 +1,13 @@
 ﻿using Schwer.ItemSystem;
 using UnityEngine;
 
-public class SaveManager : MonoBehaviour {
-    private static SaveManager _Instance;
-    public static SaveManager Instance => _Instance;
-
+public class SaveManager : MonoBehaviourSingleton<SaveManager> {
     private string fileNameAndExtension = "save.showcase";
     private string path => Application.persistentDataPath + "/" + fileNameAndExtension;
 
     [SerializeField] private ItemDatabase itemDatabase = default;
     [SerializeField] private InventorySO _inventory = default;
     private Inventory inventory => _inventory.value;
-
-    private void Awake() {
-        if (_Instance != null && _Instance != this) {
-            Destroy(this.gameObject);
-        }
-        else {
-            _Instance = this;
-        }
-    }
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.F9)) {
