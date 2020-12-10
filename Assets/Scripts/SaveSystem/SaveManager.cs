@@ -1,7 +1,7 @@
 ﻿using Schwer.ItemSystem;
 using UnityEngine;
 
-public class SaveManager : MonoBehaviourSingleton<SaveManager> {
+public class SaveManager : DDOLSingleton<SaveManager> {
     private const string fileNameAndExtension = "save.showcase";
     private string path => Application.persistentDataPath + "/" + fileNameAndExtension;
 
@@ -27,7 +27,7 @@ public class SaveManager : MonoBehaviourSingleton<SaveManager> {
         }
         else if (Input.GetButtonDown("New")) {
             Debug.Log("Loaded new save data");
-            DebugCanvas.Instance.Display("New save loaded");
+            DebugCanvas.Instance?.Display("New save loaded");
             LoadSaveData(new SaveData());
         }
     }
