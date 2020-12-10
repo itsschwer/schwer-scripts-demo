@@ -9,6 +9,11 @@ public class SaveManager : MonoBehaviourSingleton<SaveManager> {
     [SerializeField] private InventorySO _inventory = default;
     private Inventory inventory => _inventory.value;
 
+    protected override void Awake() {
+        base.Awake();
+        LoadSaveData(SaveReadWriter.ReadSaveDataFile(path));
+    }
+
     private void Update() {
         if (Input.GetButtonDown("Save")) {
             Debug.Log("Saved data to " + path);
@@ -30,5 +35,5 @@ public class SaveManager : MonoBehaviourSingleton<SaveManager> {
         }
     }
 
-    private void LoadSaveData(SaveData sd) => sd.Load(out _inventory.value, itemDatabase);
+    private void LoadSaveData(SaveData sd) => sd?.Load(out _inventory.value, itemDatabase);
 }
