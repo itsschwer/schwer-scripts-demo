@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2926419679376700625}
   - component: {fileID: 5800413177456089093}
   m_Layer: 0
-  m_Name: Coin
+  m_Name: HeartContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3252a499f1040e24c81d998bde662c5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 5c29d8d10302e9e428123ba0749b7d4e, type: 2}
+  item: {fileID: 11400000, guid: fde225e2cf7cb2f4cb85acce02bf6eb1, type: 2}
 --- !u!61 &2926419679376700624
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -63,7 +63,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.125}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.46875, y: 0.1875}
+    pivot: {x: 0.5, y: 0.125}
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
@@ -110,7 +110,7 @@ SpriteRenderer:
   m_SortingLayerID: 65135341
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 872079738df58a54985afcba6cfa3f2b, type: 3}
+  m_Sprite: {fileID: 21300024, guid: 872079738df58a54985afcba6cfa3f2b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -131,7 +131,7 @@ Animator:
   m_GameObject: {fileID: 2926419679376700620}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 40a425983cd47294e96e66b842b16361, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0cbbbf35a08417345a68de86244a4ade, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
