@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class SaveManager : MonoBehaviourSingleton<SaveManager> {
-    private string fileNameAndExtension = "save.showcase";
+    private const string fileNameAndExtension = "save.showcase";
     private string path => Application.persistentDataPath + "/" + fileNameAndExtension;
 
     [SerializeField] private ItemDatabase itemDatabase = default;
@@ -10,19 +10,22 @@ public class SaveManager : MonoBehaviourSingleton<SaveManager> {
     private Inventory inventory => _inventory.value;
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.F9)) {
+        if (Input.GetButtonDown("Save")) {
             Debug.Log("Saved data to " + path);
+            DebugCanvas.Instance.Display("Saving");
             SaveReadWriter.WriteSaveDataFile(new SaveData(inventory), path);
         }
-        else if (Input.GetKeyDown(KeyCode.F10)) {
+        else if (Input.GetButtonDown("Load")) {
             var sd = SaveReadWriter.ReadSaveDataFile(path);
             if (sd != null) {
                 Debug.Log("Loaded data from " + path);
+                DebugCanvas.Instance.Display("Loading");
                 LoadSaveData(sd);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.F11)) {
+        else if (Input.GetButtonDown("New")) {
             Debug.Log("Loaded new save data");
+            DebugCanvas.Instance.Display("New save loaded");
             LoadSaveData(new SaveData());
         }
     }
