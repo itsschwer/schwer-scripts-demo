@@ -506,6 +506,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 174696886}
   m_PrefabAsset: {fileID: 0}
+--- !u!223 &240562359 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 6148516425531417237, guid: c9023359dec1a5c4e8430f8b31a745fc,
+    type: 3}
+  m_PrefabInstance: {fileID: 377123267}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &245993362
 GameObject:
   m_ObjectHideFlags: 0
@@ -1149,6 +1155,7 @@ GameObject:
   - component: {fileID: 546220752}
   - component: {fileID: 546220751}
   - component: {fileID: 546220750}
+  - component: {fileID: 546220753}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1165,7 +1172,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 546220749}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: a8eb02f707483f543a318b905bbf2094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalAxis: Horizontal
@@ -1204,6 +1211,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &546220753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546220749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 185527b7d9c091c4f9785c89b11f7528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  userInterface: {fileID: 240562359}
 --- !u!1001 &570114834
 PrefabInstance:
   m_ObjectHideFlags: 0
