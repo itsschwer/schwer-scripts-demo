@@ -9,10 +9,7 @@ public class SaveManager : MonoBehaviourSingleton<SaveManager> {
     [SerializeField] private InventorySO _inventory = default;
     private Inventory inventory => _inventory.value;
 
-    protected override void Awake() {
-        base.Awake();
-        LoadSaveData(SaveReadWriter.ReadSaveDataFile(path));
-    }
+    private void Start() => LoadSaveData(SaveReadWriter.ReadSaveDataFile(path));
 
     private void Update() {
         if (Input.GetButtonDown("Save")) {
