@@ -20,7 +20,7 @@ namespace SchwerEditor.ItemSystem {
             EditorGUILayout.LabelField("Demo Controls", EditorStyles.boldLabel);
 
             if (GUILayout.Button("Clear Inventory")) {
-                inventory.value = new Inventory();
+                inventory.value.Clear();
                 Debug.Log("Cleared '" + inventory.name + "'.");
             }
 
