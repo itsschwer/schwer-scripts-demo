@@ -5,6 +5,10 @@ using System.Runtime.Serialization;
 
 namespace Schwer.ItemSystem {
     public class Inventory : IDictionary<Item, int> {
+        /// <summary>
+        /// Invoked when the number of an item is changed through the `Inventory[]` property,
+        /// `Remove()` is successful, or when `Add()` or `Clear()` is called. Passes in the `Item` and the its new amount.
+        /// </summary>
         public event Action<Item, int> OnContentsChanged;
 
         // Reference for custom `Dictionary`-like behaviour:
@@ -64,18 +68,46 @@ namespace Schwer.ItemSystem {
             return result;
         }
 
+        #region IDictionary methods
+        public void Add(Item key, int value) {
+            backingDictionary.Add(key, value);
+            OnContentsChanged?.Invoke(key, value);
+        }
+
+        public void Add(KeyValuePair<Item, int> item) {
+            backingDictionary.Add(item);
+            OnContentsChanged?.Invoke(item.Key, item.Value);
+        }
+
+        public bool Remove(Item key) {
+            var removeSuccessful = backingDictionary.Remove(key);
+            if (removeSuccessful) {
+                OnContentsChanged?.Invoke(key, this[key]);
+            }
+            return removeSuccessful;
+        }
+
+        public bool Remove(KeyValuePair<Item, int> item) {
+            var removeSuccessful = backingDictionary.Remove(item.Key);
+            if (removeSuccessful) {
+                OnContentsChanged?.Invoke(item.Key, item.Value);
+            }
+            return removeSuccessful;
+        }
+
+        public void Clear() {
+            backingDictionary.Clear();
+            OnContentsChanged?.Invoke(null, 0);
+        }
+
         #region IDictionary methods (default behaviour)
-        public void Add(Item key, int value) => backingDictionary.Add(key, value);
         public bool ContainsKey(Item key) => backingDictionary.ContainsKey(key);
-        public bool Remove(Item key) => backingDictionary.Remove(key);
         public bool TryGetValue(Item key, out int value) => backingDictionary.TryGetValue(key, out value);
-        public void Add(KeyValuePair<Item, int> item) => backingDictionary.Add(item);
-        public void Clear() => backingDictionary.Clear();
         public bool Contains(KeyValuePair<Item, int> item) => backingDictionary.Contains(item);
         public void CopyTo(KeyValuePair<Item, int>[] array, int arrayIndex) => backingDictionary.CopyTo(array, arrayIndex);
-        public bool Remove(KeyValuePair<Item, int> item) => backingDictionary.Remove(item.Key);
         public IEnumerator<KeyValuePair<Item, int>> GetEnumerator() => backingDictionary.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => backingDictionary.GetEnumerator();
+        #endregion
         #endregion
     }
 
