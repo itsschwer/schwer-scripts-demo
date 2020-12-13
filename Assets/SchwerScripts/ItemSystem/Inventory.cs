@@ -9,6 +9,9 @@ namespace Schwer.ItemSystem {
         /// Invoked when the number of an item is changed through the `Inventory[]` property,
         /// `Remove()` is successful, or when `Add()` or `Clear()` is called. Passes in the `Item` and the its new amount.
         /// </summary>
+        /// <remarks>
+        /// Subscribers to `OnContentsChanged` should unsubscribe during their life cycle to avoid memory leaks.
+        /// </remarks>
         public event Action<Item, int> OnContentsChanged;
 
         // Reference for custom `Dictionary`-like behaviour:
