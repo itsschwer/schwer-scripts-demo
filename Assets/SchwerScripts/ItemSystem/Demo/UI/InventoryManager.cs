@@ -37,7 +37,7 @@ namespace Schwer.ItemSystem.Demo {
             }
         }
 
-        private void UpdateSlots() => UpdateSlots(null, 0);
+        public void UpdateSlots() => UpdateSlots(null, 0);
         private void UpdateSlots(Item item, int count) {
             for (int i = 0; i < itemSlots.Count; i++) {
                 if (i < inventory.Count) {

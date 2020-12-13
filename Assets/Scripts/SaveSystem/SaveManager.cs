@@ -32,7 +32,10 @@ public class SaveManager : DDOLSingleton<SaveManager> {
         }
     }
 
-    private void LoadSaveData(SaveData sd) => sd?.Load(out _inventory.value, itemDatabase);
+    private void LoadSaveData(SaveData sd) {
+        sd?.Load(out _inventory.value, itemDatabase);
+        FindObjectOfType<Schwer.ItemSystem.Demo.InventoryManager>()?.UpdateSlots();
+    }
 
     public void ImportBase64String(string base64) {
         var sd = WebGLHelper.SaveDataFromBase64String(base64);
