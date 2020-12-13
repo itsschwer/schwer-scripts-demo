@@ -21,5 +21,9 @@ public static class SaveReadWriter {
         using (FileStream stream = new FileStream(filePath, FileMode.Create)) {
             formatter.Serialize(stream, saveData);
         }
+
+        if (Application.platform == RuntimePlatform.WebGLPlayer) {
+            WebGLHelper.PushToDownload(filePath, SaveManager.fileNameAndExtension);
+        }
     }
 }

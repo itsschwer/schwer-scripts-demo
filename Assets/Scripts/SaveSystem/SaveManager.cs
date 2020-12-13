@@ -2,8 +2,8 @@
 using UnityEngine;
 
 public class SaveManager : DDOLSingleton<SaveManager> {
-    private const string fileNameAndExtension = "save.showcase";
-    private string path => Application.persistentDataPath + "/" + fileNameAndExtension;
+    public const string fileNameAndExtension = "save.showcase";
+    public static string path => Application.persistentDataPath + "/" + fileNameAndExtension;
 
     [SerializeField] private ItemDatabase itemDatabase = default;
     [SerializeField] private InventorySO _inventory = default;
@@ -33,4 +33,11 @@ public class SaveManager : DDOLSingleton<SaveManager> {
     }
 
     private void LoadSaveData(SaveData sd) => sd?.Load(out _inventory.value, itemDatabase);
+
+    public void ImportBase64String(string base64) {
+        var sd = WebGLHelper.SaveDataFromBase64String(base64);
+        if (sd != null) {
+            LoadSaveData(sd);
+        }
+    }
 }

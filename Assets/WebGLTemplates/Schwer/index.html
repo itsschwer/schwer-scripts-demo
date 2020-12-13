@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>%UNITY_WEB_NAME%</title>
+    <script src="%UNITY_WEBGL_LOADER_URL%"></script>
+    <script>
+        var unityInstance = UnityLoader.instantiate("unityContainer", "%UNITY_WEBGL_BUILD_URL%");
+
+        function inputPrompt(button) {
+            if (button.classList.contains("enabled")) {
+                document.getElementById('input').click()
+            }
+        }
+
+        function readFile(files) {
+            if (files.length === 0) { return; }
+
+            var file = files[0];
+            var fileReader = new FileReader();
+            fileReader.readAsArrayBuffer(file);
+            fileReader.onload = function () {
+                // Reference: https://stackoverflow.com/questions/17845032/net-mvc-deserialize-byte-array-from-json-uint8array
+                var str = String.fromCharCode.apply(null, new Uint8Array(fileReader.result));
+                unityInstance.SendMessage("%UNITY_CUSTOM_IMPORT_DATA_GAME_OBJECT_NAME%", "%UNITY_CUSTOM_IMPORT_DATA_FUNCTION_NAME%", window.btoa(str));
+
+                document.querySelector('form').reset();
+            };
+        }
+    </script>
+    <style>
+        body { margin: 0; }
+
+        div#unityContainer {
+            background: transparent !important;
+            width: %UNITY_WIDTH%px;
+            height: %UNITY_HEIGHT%px;
+        }
+
+        div#unityContainer[optimise-for-pixel-art='true'] canvas {
+			image-rendering: optimizeSpeed;
+			image-rendering: -webkit-crisp-edges;
+			image-rendering: -moz-crisp-edges;
+			image-rendering: -o-crisp-edges;
+			image-rendering: crisp-edges;
+			image-rendering: -webkit-optimize-contrast;
+			image-rendering: optimize-contrast;
+			image-rendering: pixelated;
+			-ms-interpolation-mode: nearest-neighbor;
+		}
+
+        div#footer {
+            font-family: Helvetica, Arial, sans-serif;
+            text-align: center;
+            display: flex;
+            width: %UNITY_WIDTH%px;
+            height: %UNITY_CUSTOM_FOOTER_HEIGHT%px;
+        }
+
+        div#footer a {
+            flex: 1;
+            text-decoration: none;
+            background-color: #2F3136;
+            color: #363636;
+        }
+
+        div#footer a.enabled {
+            background-color: #2F3136;
+            color: #FFFFFF;
+        }
+
+        div#footer a.enabled:hover {
+            cursor: pointer;
+            background-color: #36393F;
+        }
+
+        div#footer a.enabled:active {
+            background-color: #FFFFFF;
+            color: #36393F;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="unityContainer" optimise-for-pixel-art="%UNITY_CUSTOM_OPTIMISE_FOR_PIXEL_ART%"></div>
+    <div id="footer">
+        <a onclick="unityInstance.SetFullscreen(1)" class="enabled">Fullscreen</a>
+        <a id="download">Download save file (--:--)</a>
+        <a id="import" onclick="inputPrompt(this)">Import local save file</a>
+        <form>
+            <input id="input" type="file" accept=".%UNITY_CUSTOM_SAVE_FILE_EXTENSION%" oninput="readFile(this.files)" style="display:none;">
+        </form>
+    </div>
+</body>
+
+</html>
