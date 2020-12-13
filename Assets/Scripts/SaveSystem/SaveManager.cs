@@ -9,7 +9,14 @@ public class SaveManager : DDOLSingleton<SaveManager> {
     [SerializeField] private InventorySO _inventory = default;
     private Inventory inventory => _inventory.value;
 
-    private void Start() => LoadSaveData(SaveReadWriter.ReadSaveDataFile(path));
+    private void Start() {
+        if (Application.platform != RuntimePlatform.WebGLPlayer) {
+            LoadSaveData(SaveReadWriter.ReadSaveDataFile(path));
+        }
+        else {
+            WebGLHelper.ImportEnabled(true);
+        }
+    }
 
     private void Update() {
         if (Input.GetButtonDown("Save")) {
