@@ -4,6 +4,8 @@ public abstract class Character : Actor {
     [SerializeField] private float speed = 5;
 
     protected virtual void Update() {
+        if (frozen) return;
+
         GetInput();
 
         SetAnimationXY(input.directionNonZero);

@@ -9,6 +9,7 @@ public class SceneBridge : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other) {
         var player = other.GetComponent<Player>();
         if (player != null) {
+            player.frozen = true;
             SceneTransition.SetNextSceneOrientation(nextScenePosition, player.facingDirection);
             StartCoroutine(SceneTransition.LoadSceneAsyncCo(nextSceneName, fadeOutDuration));
             GetComponent<Collider2D>().enabled = false;

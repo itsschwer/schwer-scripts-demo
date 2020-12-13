@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 public abstract class Actor : MonoBehaviour {
+    public bool frozen { get; set; }
     public new Transform transform { get; private set; }
     public new Rigidbody2D rigidbody { get; private set; }
     protected Animator animator;
