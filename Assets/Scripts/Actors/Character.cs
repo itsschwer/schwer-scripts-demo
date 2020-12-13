@@ -6,7 +6,7 @@ public abstract class Character : Actor {
     protected virtual void Update() {
         GetInput();
 
-        SetAnimationXY(input.direction);
+        SetAnimationXY(input.directionNonZero);
         animator.SetBool("Moving", (input.direction != Vector2.zero));
     }
 
