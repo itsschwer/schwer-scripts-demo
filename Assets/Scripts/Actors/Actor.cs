@@ -6,6 +6,7 @@ public abstract class Actor : MonoBehaviour {
     protected Animator animator;
 
     protected ActorInput input;
+    public Vector2 facingDirection => input.directionNonZero;
 
     protected virtual void Awake() {
         transform = GetComponent<Transform>();
