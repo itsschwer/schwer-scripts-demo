@@ -40,17 +40,17 @@ namespace SchwerEditor.ItemSystem {
             itemDB.Initialise(GetAllItemAssets());
             EditorUtility.SetDirty(itemDB);
 
-            ScriptableObjectEditorUtility.SaveRefreshAndFocus();
+            ScriptableObjectUtility.SaveRefreshAndFocus();
             Selection.activeObject = itemDB;
         }
 
         private static ItemDatabase GetItemDatabase() {
-            var databases = ScriptableObjectEditorUtility.GetAllInstances<ItemDatabase>();
+            var databases = ScriptableObjectUtility.GetAllInstances<ItemDatabase>();
 
             ItemDatabase itemDB = null;
             if (databases.Length < 1) {
                 Debug.Log("Creating a new ItemDatabase since none exist.");
-                itemDB = ScriptableObjectEditorUtility.CreateAsset<ItemDatabase>();
+                itemDB = ScriptableObjectUtility.CreateAsset<ItemDatabase>();
             }
             else if (databases.Length > 1) {
                 Debug.LogError("Multiple ItemDatabases exist. Please delete the extra(s) and try again.");
@@ -65,7 +65,7 @@ namespace SchwerEditor.ItemSystem {
         private static List<Item> GetAllItemAssets() {
             var result = new List<Item>();
 
-            var instances = ScriptableObjectEditorUtility.GetAllInstances<Item>();
+            var instances = ScriptableObjectUtility.GetAllInstances<Item>();
             var gatheredIDs = new List<int>();
             for (int i = 0; i < instances.Length; i++) {
                 if (gatheredIDs.Contains(instances[i].id)) {

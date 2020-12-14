@@ -44,7 +44,7 @@ namespace SchwerEditor.ItemSystem {
             Repaint();
 
             //! Should probably only run this line if an Item asset was created or deleted.
-            var items = ScriptableObjectEditorUtility.GetAllInstances<Item>().OrderBy(i => i.id).ToArray();
+            var items = ScriptableObjectUtility.GetAllInstances<Item>().OrderBy(i => i.id).ToArray();
             
             EditorGUILayout.BeginHorizontal();
 

@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
 namespace SchwerEditor {
-    public static class ScriptableObjectEditorUtility {
+    public static class ScriptableObjectUtility {
         /// <summary>
         /// Wrapper for `AssetDatabase.SaveAssets`, `AssetDatabase.Refresh`, and `EditorUtility.FocusProjectWindow`.
         /// </summary>
