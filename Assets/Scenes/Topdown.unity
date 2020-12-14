@@ -2290,7 +2290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd88961a20cb6264081df89131b273c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 1028790940}
   offset: {x: 0, y: 0.625}
   boundingBox: {fileID: 40039700}
 --- !u!20 &519420031
@@ -4361,6 +4361,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2926419679376700622, guid: b0550aa416a9f3d4cb06272bea610631,
     type: 3}
   m_PrefabInstance: {fileID: 1014563828}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1028790940 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3955599529767621307, guid: 055a43ddcdb8edd4d9524b7aa72fa2bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1532186080}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1031252160
 PrefabInstance:
