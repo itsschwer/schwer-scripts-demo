@@ -28,7 +28,7 @@ namespace SchwerEditor {
                 Selection.activeObject = instance;
             }
             else {
-                Debug.Log("No prefab exists at: " + path);
+                Debug.LogWarning("No prefab exists at: " + path);
             }
         }
     }

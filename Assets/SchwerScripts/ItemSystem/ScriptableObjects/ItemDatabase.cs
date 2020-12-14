@@ -16,7 +16,7 @@ namespace Schwer.ItemSystem {
                     result = item;
                 }
             }
-            if (result == null) { Debug.Log("Item '" + itemID + "' was not found in the database."); }
+            if (result == null) { Debug.LogWarning("Item '" + itemID + "' was not found in the database."); }
             return result;
         }
     }
