@@ -61,7 +61,7 @@ namespace SchwerEditor.ItemSystem {
                 }
             }
             else {
-                EditorGUILayout.HelpBox("Select an item from the sidebar to begin editing", MessageType.Info);
+                EditorGUILayout.HelpBox("Select an item from the sidebar to begin editing.", MessageType.Info);
             }
             EditorGUILayout.EndVertical();
 
@@ -77,11 +77,12 @@ namespace SchwerEditor.ItemSystem {
 
             var itemObj = new SerializedObject(item);
 
-            EditorGUILayout.PropertyField(itemObj.FindProperty("_id"));
-            EditorGUILayout.PropertyField(itemObj.FindProperty("_name"));
-            EditorGUILayout.PropertyField(itemObj.FindProperty("_description"));
-            EditorGUILayout.PropertyField(itemObj.FindProperty("_sprite"));
-            EditorGUILayout.PropertyField(itemObj.FindProperty("_stackable"));
+            // Reference: https://answers.unity.com/questions/787907/is-there-a-way-to-get-the-names-of-all-serializedp.html
+            var properties = itemObj.GetIterator();
+            properties.NextVisible(true);  // Skip script property
+            while (properties.NextVisible(true)) {
+                EditorGUILayout.PropertyField(properties);
+            }
 
             itemObj.ApplyModifiedProperties();
         }
