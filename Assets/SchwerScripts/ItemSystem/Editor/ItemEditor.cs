@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -32,6 +33,8 @@ namespace SchwerEditor.ItemSystem {
     }
 
     public class ItemEditor : EditorWindow {
+        private Item selectedItem;
+
         [MenuItem("Item System/Open Item Editor")]
         public static void ShowWindow() => GetWindow<ItemEditor>("Item Editor");
         public static void ShowWindow(Item item) {
@@ -39,7 +42,6 @@ namespace SchwerEditor.ItemSystem {
             window.selectedItem = item;
         }
 
-        private Item selectedItem;
         private void OnGUI() {
             Repaint();
 
@@ -91,10 +93,40 @@ namespace SchwerEditor.ItemSystem {
         }
 
         private Item DrawItemsSidebar(Item[] items) {
+            var button = new GUIStyle(GUI.skin.button);
+            button.alignment = TextAnchor.MiddleLeft;
+
+            var regCol = GUI.backgroundColor;
+            var selCol = new Color(0.239f, 0.501f, 0.874f);
+            var selTxt = Color.white;
+            var dupCol = new Color(0.866f, 0.258f, 0.250f);
+            var dupTxt = dupCol;
+
+            var ids = new HashSet<int>();
             foreach (var item in items) {
-                EditorGUILayout.BeginHorizontal();
-                GUILayout.Label(item.id.ToString(), GUILayout.MaxWidth(28));
-                if (GUILayout.Button(item.name)) {
+                var selected = (selectedItem == item);
+                var dupeID = (!ids.Add(item.id));
+
+                var label = new GUIStyle(GUI.skin.label);
+
+                if (selected || dupeID) {
+                    label.normal.textColor = selTxt;
+                    if (selected) {
+                        GUI.backgroundColor = selCol;
+                        if (dupeID) {
+                            label.normal.textColor = dupTxt;
+                        }
+                    }
+                    else {
+                        GUI.backgroundColor = dupCol;
+                    }
+                }
+
+                EditorGUILayout.BeginHorizontal("box");
+                GUI.backgroundColor = regCol;
+
+                GUILayout.Label(item.id.ToString(), label, GUILayout.MinWidth(28), GUILayout.ExpandWidth(false));
+                if (GUILayout.Button(item.name, button)) {
                     selectedItem = item;
                 }
 
