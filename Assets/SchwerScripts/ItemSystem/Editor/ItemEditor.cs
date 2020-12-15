@@ -59,7 +59,7 @@ namespace SchwerEditor.ItemSystem {
                 }
             }
             else {
-                EditorGUILayout.LabelField("Select an item from the list.");
+                EditorGUILayout.HelpBox("Select an item from the sidebar to begin editing", MessageType.Info);
             }
             EditorGUILayout.EndVertical();
 
@@ -71,6 +71,8 @@ namespace SchwerEditor.ItemSystem {
         }
 
         private void DrawItemProperties(Item item) {
+            DrawDisabledItemField(item);
+
             var itemObj = new SerializedObject(item);
 
             EditorGUILayout.PropertyField(itemObj.FindProperty("_id"));
@@ -82,6 +84,12 @@ namespace SchwerEditor.ItemSystem {
             itemObj.ApplyModifiedProperties();
         }
 
+        private void DrawDisabledItemField(Item item) {
+            EditorGUI.BeginDisabledGroup(true);
+            EditorGUILayout.ObjectField(item, typeof(Item), false);
+            EditorGUI.EndDisabledGroup();
+        }
+
         private Item DrawItemsSidebar(Item[] items) {
             foreach (var item in items) {
                 EditorGUILayout.BeginHorizontal();
@@ -89,6 +97,7 @@ namespace SchwerEditor.ItemSystem {
                 if (GUILayout.Button(item.name)) {
                     selectedItem = item;
                 }
+
                 EditorGUILayout.EndHorizontal();
             }
             return selectedItem;
