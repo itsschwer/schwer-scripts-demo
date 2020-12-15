@@ -10,9 +10,10 @@ namespace SchwerEditor.ItemSystem {
         private static int amount = 1;
 
         public override void OnInspectorGUI() {
-            var inventory = (InventorySO)target;
-
+            base.OnInspectorGUI();
             GUILayout.Space(5);
+            
+            var inventory = (InventorySO)target;
             DrawDemoControls(inventory);
         }
 

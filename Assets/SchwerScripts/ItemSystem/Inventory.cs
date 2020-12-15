@@ -4,7 +4,12 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Schwer.ItemSystem {
-    public class Inventory : IDictionary<Item, int> {
+    [Serializable]  // Only to allow Unity to display Inventories in the Inspector
+    public class Inventory : IDictionary<Item, int>
+#if UNITY_EDITOR
+    , UnityEngine.ISerializationCallbackReceiver
+#endif
+    {
         /// <summary>
         /// Invoked when the number of an item is changed through the `Inventory[]` property,
         /// `Remove()` is successful, or when `Add()` or `Clear()` is called. Passes in the `Item` and the its new amount.
@@ -112,6 +117,29 @@ namespace Schwer.ItemSystem {
         IEnumerator IEnumerable.GetEnumerator() => backingDictionary.GetEnumerator();
         #endregion
         #endregion
+        
+#if UNITY_EDITOR
+        #region Editor-only serialisation for read-only display
+
+        [UnityEngine.SerializeField] private List<Item> keys;
+        [UnityEngine.SerializeField] private List<int> values;
+
+        //! Called every frame when Inventory is inspected, as this is how Unity displays objects in the Inspector.
+        public void OnBeforeSerialize() => DictionaryToLists();
+        public void OnAfterDeserialize() {} // No writing to dictionary
+
+        private void DictionaryToLists() {
+            keys = new List<Item>();
+            values = new List<int>();
+
+            foreach (var kvp in this) {
+                keys.Add(kvp.Key);
+                values.Add(kvp.Value);
+            }
+        }
+
+        #endregion
+#endif
     }
 
     [Serializable]
