@@ -124,6 +124,7 @@ namespace Schwer.ItemSystem {
         [UnityEngine.SerializeField] private List<Item> keys;
         [UnityEngine.SerializeField] private List<int> values;
 
+        //! Called every frame when Inventory is inspected, as this is how Unity displays objects in the Inspector.
         public void OnBeforeSerialize() => DictionaryToLists();
         public void OnAfterDeserialize() {} // No writing to dictionary
 
