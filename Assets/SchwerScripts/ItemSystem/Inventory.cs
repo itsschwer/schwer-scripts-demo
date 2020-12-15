@@ -127,6 +127,8 @@ namespace Schwer.ItemSystem {
         //! Called every frame when Inventory is inspected, as this is how Unity displays objects in the Inspector.
         public void OnBeforeSerialize() => DictionaryToLists();
         public void OnAfterDeserialize() {} // No writing to dictionary
+        // public void OnAfterDeserialize() => ListsToDictionary();
+        // // UnityException: ToString is not allowed to be called during serialization, call it from OnEnable instead. Called from ScriptableObject 'InventorySO'.
 
         private void DictionaryToLists() {
             keys = new List<Item>();
@@ -135,6 +137,12 @@ namespace Schwer.ItemSystem {
             foreach (var kvp in this) {
                 keys.Add(kvp.Key);
                 values.Add(kvp.Value);
+            }
+        }
+
+        private void ListsToDictionary() {
+            for (int i = 0; i < Math.Min(keys.Count, values.Count); i++) {
+                this.Add(keys[i], values[i]);
             }
         }
 
