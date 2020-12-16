@@ -75,16 +75,10 @@ namespace SchwerEditor.ItemSystem {
         private void DrawItemProperties(Item item) {
             DrawDisabledItemField(item);
 
-            var itemObj = new SerializedObject(item);
-
-            // Reference: https://answers.unity.com/questions/787907/is-there-a-way-to-get-the-names-of-all-serializedp.html
-            var properties = itemObj.GetIterator();
-            properties.NextVisible(true);  // Skip script property
-            while (properties.NextVisible(true)) {
-                EditorGUILayout.PropertyField(properties);
-            }
-
-            itemObj.ApplyModifiedProperties();
+            // Reference: https://forum.unity.com/threads/odd-serialization-behaviour-of-unityevent-inside-an-editor-window.505653/
+            // ^ Not sure if there are any issues/quirks with this method.
+            var editor = Editor.CreateEditor(item);
+            editor.DrawDefaultInspector();
         }
 
         private void DrawDisabledItemField(Item item) {
