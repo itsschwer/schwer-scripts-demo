@@ -1,25 +1,49 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UserInterfaceController : MonoBehaviour {
-    [SerializeField] private Canvas userInterface = default;
+    private static event Action OnTradeInterfaceRequested;
+    public static void RequestTradeInterface() => OnTradeInterfaceRequested?.Invoke();
+    
+    [SerializeField] private Canvas inventoryInterface = default;
+    [SerializeField] private Canvas tradeInterface = default;
+
     private float timeScale;
+
+    private void OnEnable() => OnTradeInterfaceRequested += EnableTradeInterface;
+    private void OnDisable() => OnTradeInterfaceRequested -= EnableTradeInterface;
 
     private void Update() {
         if (Input.GetButtonDown("Tab")) {
-            if (userInterface.gameObject.activeSelf) {
-                userInterface.gameObject.SetActive(false);
+            if (tradeInterface.gameObject.activeSelf) {
+                tradeInterface.gameObject.SetActive(false);
                 Time.timeScale = timeScale;
-                
             }
             else {
-                userInterface.gameObject.SetActive(true);
-                timeScale = Time.timeScale;
-                Time.timeScale = 0;
-                // Need to call `OnSelect` on current selectable to make it highlighted
-                EventSystem.current.currentSelectedGameObject.GetComponent<Selectable>()?.OnSelect(null);
+                if (inventoryInterface.gameObject.activeSelf) {
+                    inventoryInterface.gameObject.SetActive(false);
+                    Time.timeScale = timeScale;
+                    
+                }
+                else {
+                    PauseTime();
+                    inventoryInterface.gameObject.SetActive(true);
+                    // Need to call `OnSelect` on current selectable to make it highlighted
+                    EventSystem.current.currentSelectedGameObject.GetComponent<Selectable>()?.OnSelect(null);
+                }
             }
         }
+    }
+
+    private void PauseTime() {
+        timeScale = Time.timeScale;
+        Time.timeScale = 0;
+    }
+
+    private void EnableTradeInterface() {
+        PauseTime();
+        tradeInterface.gameObject.SetActive(true);
     }
 }

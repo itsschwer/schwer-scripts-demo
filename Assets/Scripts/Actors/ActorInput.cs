@@ -14,5 +14,5 @@ public struct ActorInput {
     }
     public Vector2 directionNonZero { get; private set; }
 
-    public bool attack;
+    public bool interact;
 }

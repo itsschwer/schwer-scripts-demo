@@ -8,6 +8,7 @@ public abstract class Actor : MonoBehaviour {
 
     protected ActorInput input;
     public Vector2 facingDirection => input.directionNonZero;
+    public bool inputInteract => input.interact;
 
     protected virtual void Awake() {
         transform = GetComponent<Transform>();
