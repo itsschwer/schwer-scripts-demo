@@ -19353,8 +19353,8 @@ MonoBehaviour:
   quitLog: {fileID: 1459213331}
   quitHoldDuration: 5
   saveLog: {fileID: 1305284718}
-  displayDuration: 1
-  fadeDuration: 0.5
+  displayDuration: 0.2
+  fadeDuration: 0.8
 --- !u!1001 &7833455935095601770
 PrefabInstance:
   m_ObjectHideFlags: 0
