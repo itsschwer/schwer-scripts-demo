@@ -41,7 +41,10 @@ public class SaveManager : DDOLSingleton<SaveManager> {
 
     private void LoadSaveData(SaveData sd) {
         sd?.Load(out _inventory.value, itemDatabase);
+        // Just for demo, loading normally wouldn't be possible with inventory displayed
+        // or should replace with 'real' solution (event, most likely)
         FindObjectOfType<Schwer.ItemSystem.Demo.InventoryManager>()?.UpdateSlots();
+        FindObjectOfType<TradeManager>()?.UpdateSlots();
     }
 
     public void ImportBase64String(string base64) {
