@@ -18969,6 +18969,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trade
       objectReference: {fileID: 0}
+    - target: {fileID: 6136966829026835255, guid: 7cabfc9b257e6544da095b4eb9e77191,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7cabfc9b257e6544da095b4eb9e77191, type: 3}
 --- !u!1001 &2926419679631025921

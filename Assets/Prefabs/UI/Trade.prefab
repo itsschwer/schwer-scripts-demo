@@ -546,6 +546,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inventory: {fileID: 11400000, guid: b188cc88ca043324f9d397b2fbc8f2e5, type: 2}
+  offers:
+  - offer:
+    - item: {fileID: 11400000, guid: 10feaf59eb3b3bb4c895c72c2e06735d, type: 2}
+      count: 3
+    - item: {fileID: 11400000, guid: 5c29d8d10302e9e428123ba0749b7d4e, type: 2}
+      count: 1
+    - item: {fileID: 11400000, guid: fde225e2cf7cb2f4cb85acce02bf6eb1, type: 2}
+      count: 1
+    - item: {fileID: 0}
+      count: 0
+  - offer:
+    - item: {fileID: 0}
+      count: 0
+    - item: {fileID: 0}
+      count: 0
+    - item: {fileID: 0}
+      count: 0
+    - item: {fileID: 0}
+      count: 0
+  - offer:
+    - item: {fileID: 0}
+      count: 0
+    - item: {fileID: 0}
+      count: 0
+    - item: {fileID: 0}
+      count: 0
+    - item: {fileID: 0}
+      count: 0
 --- !u!114 &7365755396602741883
 MonoBehaviour:
   m_ObjectHideFlags: 0

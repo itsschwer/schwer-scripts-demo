@@ -45,5 +45,7 @@ public class UserInterfaceController : MonoBehaviour {
     private void EnableTradeInterface() {
         PauseTime();
         tradeInterface.gameObject.SetActive(true);
+        // Need to call `OnSelect` on current selectable to make it highlighted
+        EventSystem.current.currentSelectedGameObject.GetComponent<Selectable>()?.OnSelect(null);
     }
 }

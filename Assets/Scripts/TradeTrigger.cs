@@ -2,10 +2,17 @@
 
 public class TradeTrigger : MonoBehaviour {
     private Player player;
+    private bool activationSent;
 
     private void Update() {
-        if (player != null && player.inputInteract) {
-            UserInterfaceController.RequestTradeInterface();
+        if (Time.timeScale > 0) {
+            if (player != null && player.inputInteract && !activationSent) {
+                UserInterfaceController.RequestTradeInterface();
+                activationSent = true;
+            }
+            else {
+                activationSent = false;
+            }
         }
     }
 

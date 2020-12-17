@@ -17,6 +17,12 @@ namespace Schwer.ItemSystem.Demo {
 
         private void OnEnable() {
             inventory.OnContentsChanged += UpdateSlots;
+
+            var selected = EventSystem.current.currentSelectedGameObject;
+            if (selected == null || !selected.transform.IsChildOf(this.transform)) {
+                EventSystem.current.SetSelectedGameObject(itemSlots[0].gameObject);
+            }
+
             Initialise();
         }
 
@@ -49,7 +55,7 @@ namespace Schwer.ItemSystem.Demo {
                 }
             }
 
-            var current = EventSystem.current?.currentSelectedGameObject?.GetComponent<ItemSlot>();
+            var current = EventSystem.current.currentSelectedGameObject?.GetComponent<ItemSlot>();
             if (current != null) {
                 UpdateDisplay(current.item);
             }
