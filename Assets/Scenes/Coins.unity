@@ -789,7 +789,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 185527b7d9c091c4f9785c89b11f7528, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userInterface: {fileID: 240562359}
+  inventoryInterface: {fileID: 240562359}
+  tradeInterface: {fileID: 0}
 --- !u!1 &818535244
 GameObject:
   m_ObjectHideFlags: 0
@@ -4050,6 +4051,75 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1001 &1834246186
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5066470295657466496, guid: cd942859caaf22543b1d1e90d5da9b56,
+        type: 3}
+      propertyPath: m_Name
+      value: Skull
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066470295657466498, guid: cd942859caaf22543b1d1e90d5da9b56,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066470295657466498, guid: cd942859caaf22543b1d1e90d5da9b56,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066470295657466498, guid: cd942859caaf22543b1d1e90d5da9b56,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066470295657466498, guid: cd942859caaf22543b1d1e90d5da9b56,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066470295657466498, guid: cd942859caaf22543b1d1e90d5da9b56,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066470295657466498, guid: cd942859caaf22543b1d1e90d5da9b56,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066470295657466498, guid: cd942859caaf22543b1d1e90d5da9b56,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066470295657466498, guid: cd942859caaf22543b1d1e90d5da9b56,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066470295657466498, guid: cd942859caaf22543b1d1e90d5da9b56,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066470295657466498, guid: cd942859caaf22543b1d1e90d5da9b56,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066470295657466498, guid: cd942859caaf22543b1d1e90d5da9b56,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cd942859caaf22543b1d1e90d5da9b56, type: 3}
 --- !u!1001 &1848199506
 PrefabInstance:
   m_ObjectHideFlags: 0
