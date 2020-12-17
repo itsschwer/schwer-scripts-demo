@@ -1,8 +1,12 @@
 ﻿using UnityEngine;
 
 public class TradeTrigger : MonoBehaviour {
+    private Animator animator;
+
     private Player player;
     private bool activationSent;
+
+    private void Awake() => animator = GetComponent<Animator>();
 
     private void Update() {
         if (Time.timeScale > 0) {
@@ -20,6 +24,7 @@ public class TradeTrigger : MonoBehaviour {
         var player = other.GetComponent<Player>();
         if (player != null) {
             this.player = player;
+            animator.SetBool("closed", false);
         }
     }
 
@@ -27,6 +32,7 @@ public class TradeTrigger : MonoBehaviour {
         var player = other.GetComponent<Player>();
         if (player != null) {
             this.player = null;
+            animator.SetBool("closed", true);
         }
     }
 }
