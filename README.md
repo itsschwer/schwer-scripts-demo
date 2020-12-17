@@ -3,6 +3,9 @@
 
 Demonstrating how [**schwer-scripts**](https://github.com/itsschwer/schwer-scripts) could be used. A playable demo is available on [itch.io](https://schwer.itch.io/showcase).
 
+<img width="49.7%" alt="screenshot of inventory menu" src="https://github.com/itsschwer/Showcase/blob/master/screen-captures/screenshot_inventory.png?raw=true"></img>
+<img width="49.7%" alt="screenshot of trading menu" src="https://github.com/itsschwer/Showcase/blob/master/screen-captures/screenshot_trade.png?raw=true"></img>
+
 ## Licensing
 Unless otherwise specified, the contents of this repository are released under the [MIT License](https://github.com/itsschwer/Showcase/blob/master/LICENSE). Attribution is appreciated.
 
