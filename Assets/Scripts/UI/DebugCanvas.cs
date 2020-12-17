@@ -59,9 +59,9 @@ public class DebugCanvas : MonoBehaviourSingleton<DebugCanvas> {
     }
 
     private IEnumerator FadeTextCo() {
-        yield return new WaitForSeconds(displayDuration);
+        yield return new WaitForSecondsRealtime(displayDuration);
         saveLog.CrossFadeAlpha(0, fadeDuration, true);
-        yield return new WaitForSeconds(fadeDuration);
+        yield return new WaitForSecondsRealtime(fadeDuration);
         runningCoroutine = null;
     }
 }
