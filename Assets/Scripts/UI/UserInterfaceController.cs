@@ -17,7 +17,7 @@ public class UserInterfaceController : MonoBehaviour {
 
     private void Update() {
         if (Input.GetButtonDown("Tab")) {
-            if (tradeInterface.gameObject.activeSelf) {
+            if (tradeInterface != null && tradeInterface.gameObject.activeSelf) {
                 tradeInterface.gameObject.SetActive(false);
                 Time.timeScale = timeScale;
             }
