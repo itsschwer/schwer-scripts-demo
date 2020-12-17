@@ -6,6 +6,10 @@ namespace SchwerEditor.ItemSystem {
     
     [CustomPropertyDrawer(typeof(Inventory))]
     public class InventoryDrawer : PropertyDrawer {
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => -4;
+        // ^ Reference: https://forum.unity.com/threads/accumulating-empty-space-at-the-top-of-an-array-containing-custompropertydrawer-items.509133/
+        // Otherwise there would be an excessive gap between the script field and where the drawer began.
+
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
             var keys = property.FindPropertyRelative("keys");
             var values = property.FindPropertyRelative("values");
