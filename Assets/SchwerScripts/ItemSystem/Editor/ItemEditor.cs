@@ -34,6 +34,7 @@ namespace SchwerEditor.ItemSystem {
 
     public class ItemEditor : EditorWindow {
         private Item selectedItem;
+        private Vector2 scrollPos;
 
         [MenuItem("Item System/Open Item Editor")]
         public static void ShowWindow() => GetWindow<ItemEditor>("Item Editor");
@@ -50,9 +51,7 @@ namespace SchwerEditor.ItemSystem {
             
             EditorGUILayout.BeginHorizontal();
 
-            EditorGUILayout.BeginVertical("box", GUILayout.MaxWidth(150), GUILayout.ExpandHeight(true));
             selectedItem = DrawItemsSidebar(items);
-            EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical("box", GUILayout.ExpandHeight(true));
             if (selectedItem != null) {
@@ -88,6 +87,12 @@ namespace SchwerEditor.ItemSystem {
         }
 
         private Item DrawItemsSidebar(Item[] items) {
+            var maxWidth = 150;
+            var scrollBarWidth = 30;
+            
+            EditorGUILayout.BeginVertical("box", GUILayout.MaxWidth(maxWidth + scrollBarWidth), GUILayout.ExpandHeight(true));
+            scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.MinWidth(maxWidth + 1), GUILayout.MaxWidth(maxWidth + scrollBarWidth), GUILayout.ExpandWidth(true));   // Need to use maxWidth + 1 to avoid horizontal scroll bar
+
             var button = new GUIStyle(GUI.skin.button);
             button.alignment = TextAnchor.MiddleLeft;
 
@@ -127,6 +132,10 @@ namespace SchwerEditor.ItemSystem {
 
                 EditorGUILayout.EndHorizontal();
             }
+
+            EditorGUILayout.EndScrollView();
+            EditorGUILayout.EndVertical();
+            
             return selectedItem;
         }
     }
