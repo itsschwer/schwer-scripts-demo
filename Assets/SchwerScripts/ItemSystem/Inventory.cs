@@ -142,8 +142,12 @@ namespace Schwer.ItemSystem {
 
         private void ListsToDictionary() {
             this.Clear();
-            
-            for (int i = 0; i < Math.Min(keys.Count, values.Count); i++) {
+
+            if(keys.Count != values.Count) {
+                throw new Exception($"Deserialization failed: The number of keys ({keys.Count}) and values ({values.Count}) are not equal.");
+            }
+
+            for (int i = 0; i < keys.Count; i++) {
                 this.Add(keys[i], values[i]);
             }
         }
