@@ -141,6 +141,8 @@ namespace Schwer.ItemSystem {
         }
 
         private void ListsToDictionary() {
+            this.Clear();
+            
             for (int i = 0; i < Math.Min(keys.Count, values.Count); i++) {
                 this.Add(keys[i], values[i]);
             }
