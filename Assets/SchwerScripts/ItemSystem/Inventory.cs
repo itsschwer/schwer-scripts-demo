@@ -126,9 +126,10 @@ namespace Schwer.ItemSystem {
 
         //! Called every frame when Inventory is inspected, as this is how Unity displays objects in the Inspector.
         public void OnBeforeSerialize() => DictionaryToLists();
-        public void OnAfterDeserialize() {} // No writing to dictionary
-        // public void OnAfterDeserialize() => ListsToDictionary();
-        // // UnityException: ToString is not allowed to be called during serialization, call it from OnEnable instead. Called from ScriptableObject 'InventorySO'.
+        // public void OnAfterDeserialize() {} // No writing to dictionary
+        public void OnAfterDeserialize() => ListsToDictionary();
+        //! UnityException: ToString is not allowed to be called during serialization, call it from OnEnable instead. Called from ScriptableObject 'InventorySO'.
+        //! Not entirely sure what causes the above, may have been due to missing `this.Clear` in `ListsToDictionary`?
 
         private void DictionaryToLists() {
             keys = new List<Item>();
