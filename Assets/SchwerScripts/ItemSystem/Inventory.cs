@@ -5,11 +5,7 @@ using System.Runtime.Serialization;
 
 namespace Schwer.ItemSystem {
     [Serializable]  // Only to allow Unity to display Inventories in the Inspector
-    public class Inventory : IDictionary<Item, int>
-#if UNITY_EDITOR
-    , UnityEngine.ISerializationCallbackReceiver
-#endif
-    {
+    public class Inventory : IDictionary<Item, int>, UnityEngine.ISerializationCallbackReceiver {
         /// <summary>
         /// Invoked when the number of an item is changed through the `Inventory[]` property,
         /// `Remove()` is successful, or when `Add()` or `Clear()` is called. Passes in the `Item` and the its new amount.
@@ -118,9 +114,7 @@ namespace Schwer.ItemSystem {
         #endregion
         #endregion
         
-#if UNITY_EDITOR
-        #region Editor-only serialisation for read-only display
-
+        #region ISerializationCallbackReciever
         [UnityEngine.SerializeField] private List<Item> keys;
         [UnityEngine.SerializeField] private List<int> values;
 
@@ -152,9 +146,7 @@ namespace Schwer.ItemSystem {
                 this.Add(keys[i], values[i]);
             }
         }
-
         #endregion
-#endif
     }
 
     [Serializable]
