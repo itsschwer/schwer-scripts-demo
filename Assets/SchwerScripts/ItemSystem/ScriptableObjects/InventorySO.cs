@@ -9,9 +9,7 @@ namespace Schwer.ItemSystem {
         private void OnEnable() => value.OnContentsChanged += MarkDirtyIfChanged;
         private void OnDisable() => value.OnContentsChanged -= MarkDirtyIfChanged;
 
-        private void MarkDirtyIfChanged(Item item, int count) {
-            UnityEditor.EditorUtility.SetDirty(this);
-        }
+        private void MarkDirtyIfChanged(Item item, int count) => UnityEditor.EditorUtility.SetDirty(this);
 #endif
     }
 }
