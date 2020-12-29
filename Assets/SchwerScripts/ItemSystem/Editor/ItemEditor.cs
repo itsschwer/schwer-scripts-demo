@@ -50,40 +50,13 @@ namespace SchwerEditor.ItemSystem {
             var items = ScriptableObjectUtility.GetAllInstances<Item>().OrderBy(i => i.id).ToArray();
             
             EditorGUILayout.BeginHorizontal();
-
             selectedItem = DrawItemsSidebar(items);
-
-            EditorGUILayout.BeginVertical("box", GUILayout.ExpandHeight(true));
-            if (selectedItem != null) {
-                if (selectedItem is Item) {
-                    DrawItemProperties((Item)selectedItem);
-                }
-            }
-            else {
-                EditorGUILayout.HelpBox("Select an item from the sidebar to begin editing.", MessageType.Info);
-            }
-            EditorGUILayout.EndVertical();
-
+            DrawSelectedItem();
             EditorGUILayout.EndHorizontal();
 
             if (GUILayout.Button("Generate ItemDatabase")) {
                 ItemDatabaseUtility.GenerateItemDatabase();
             }
-        }
-
-        private void DrawItemProperties(Item item) {
-            DrawDisabledItemField(item);
-
-            // Reference: https://forum.unity.com/threads/odd-serialization-behaviour-of-unityevent-inside-an-editor-window.505653/
-            // ^ Not sure if there are any issues/quirks with this method.
-            var editor = Editor.CreateEditor(item);
-            editor.DrawDefaultInspector();
-        }
-
-        private void DrawDisabledItemField(Item item) {
-            EditorGUI.BeginDisabledGroup(true);
-            EditorGUILayout.ObjectField(item, typeof(Item), false);
-            EditorGUI.EndDisabledGroup();
         }
 
         private Item DrawItemsSidebar(Item[] items) {
@@ -137,6 +110,34 @@ namespace SchwerEditor.ItemSystem {
             EditorGUILayout.EndVertical();
             
             return selectedItem;
+        }
+
+        private void DrawSelectedItem() {
+            EditorGUILayout.BeginVertical("box", GUILayout.ExpandHeight(true));
+            if (selectedItem != null) {
+                if (selectedItem is Item) {
+                    DrawItemProperties((Item)selectedItem);
+                }
+            }
+            else {
+                EditorGUILayout.HelpBox("Select an item from the sidebar to begin editing.", MessageType.Info);
+            }
+            EditorGUILayout.EndVertical();
+        }
+
+        private void DrawItemProperties(Item item) {
+            DrawDisabledItemField(item);
+
+            // Reference: https://forum.unity.com/threads/odd-serialization-behaviour-of-unityevent-inside-an-editor-window.505653/
+            // ^ Not sure if there are any issues/quirks with using `DrawDefaultInspector`
+            var editor = Editor.CreateEditor(item);
+            editor.DrawDefaultInspector();
+        }
+
+        private void DrawDisabledItemField(Item item) {
+            EditorGUI.BeginDisabledGroup(true);
+            EditorGUILayout.ObjectField(item, typeof(Item), false);
+            EditorGUI.EndDisabledGroup();
         }
     }
 }
