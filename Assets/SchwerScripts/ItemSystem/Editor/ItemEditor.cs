@@ -33,9 +33,11 @@ namespace SchwerEditor.ItemSystem {
     }
 
     public class ItemEditor : EditorWindow {
-        private Item selectedItem;
         private Vector2 sidebarScroll;
         private Vector2 selectedItemScroll;
+
+        private Item[] itemAssets;
+        private Item selectedItem;
 
         [MenuItem("Item System/Open Item Editor")]
         public static void ShowWindow() => GetWindow<ItemEditor>("Item Editor");
@@ -44,14 +46,19 @@ namespace SchwerEditor.ItemSystem {
             window.selectedItem = item;
         }
 
-        private void OnGUI() {
-            Repaint();
-
+        // OnGUI is supposedly called many times per (render) frame (crude debug logging indicates this *is* the case),
+        // so use Update for non-render logic.
+        // Also see this: https://stackoverflow.com/questions/56298821/balancing-calls-inside-of-a-editorwindow-ongui-method-causing-problems
+        private void Update() {
             //! Should probably only run this line if an Item asset was created or deleted.
-            var items = ScriptableObjectUtility.GetAllInstances<Item>().OrderBy(i => i.id).ToArray();
-            
+            itemAssets = ScriptableObjectUtility.GetAllInstances<Item>().OrderBy(i => i.id).ToArray();
+
+            Repaint();
+        }
+
+        private void OnGUI() {
             EditorGUILayout.BeginHorizontal();
-            selectedItem = DrawItemsSidebar(items);
+            selectedItem = DrawItemsSidebar(itemAssets);
             DrawSelectedItem();
             EditorGUILayout.EndHorizontal();
 
