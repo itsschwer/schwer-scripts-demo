@@ -3,6 +3,9 @@ using UnityEditor;
 using UnityEngine;
 
 namespace SchwerEditor {
+    /// <summary>
+    /// Editor class for working with Scriptable Object assets.
+    /// </summary>
     public static class ScriptableObjectUtility {
         /// <summary>
         /// Creates a new Scriptable Object asset in a manner that mimics Unity's asset creation process.

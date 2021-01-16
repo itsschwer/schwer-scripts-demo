@@ -45,7 +45,7 @@ namespace SchwerEditor.ItemSystem {
         }
 
         private static ItemDatabase GetItemDatabase() {
-            var databases = AssetsUtility.FindAllInstances<ItemDatabase>();
+            var databases = AssetsUtility.FindAllAssets<ItemDatabase>();
 
             ItemDatabase itemDB = null;
             if (databases.Length < 1) {
@@ -65,7 +65,7 @@ namespace SchwerEditor.ItemSystem {
         private static List<Item> GetAllItemAssets() {
             var result = new List<Item>();
 
-            var instances = AssetsUtility.FindAllInstances<Item>();
+            var instances = AssetsUtility.FindAllAssets<Item>();
             var gatheredIDs = new List<int>();
             for (int i = 0; i < instances.Length; i++) {
                 if (gatheredIDs.Contains(instances[i].id)) {

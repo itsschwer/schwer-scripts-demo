@@ -7,6 +7,7 @@ These should always be placed in a folder named `Editor`, as that is a [special 
 
 ## Contents
 * [`PrefabMenu`](#PrefabMenu) (menu items to speed up prefab workflow)
+* [`AssetsUtility`](#AssetsUtility) (work with assets via code)
 * [`ScriptableObjectUtility`](#ScriptableObjectUtility) (work with Scriptable Object assets via code)
 * [`EditorWindowUtility`](#EditorWindowUtility) [not yet documented]
 
@@ -25,41 +26,18 @@ public static void InstantiatePlayerPrefab(MenuCommand command) {
 }
 ```
 
-# `ScriptableObjectUtility`
-Editor script intended for working with Scriptable Object assets through code.
+# `AssetsUtility`
+Editor script containing wrapper functions for working with assets.
 ## Methods
-### `CreateAsset<T>`
-Creates a Scriptable Object of type `T` in a process similar to `[CreateAssetMenu]`. 
-#### Example usage (from [ItemDatabaseUtility.cs](https://github.com/itsschwer/schwer-scripts/blob/master/SchwerScripts/ItemSystem/Editor/ItemDatabaseUtility.cs)):
-```csharp
-private static ItemDatabase GetItemDatabase() {
-    var databases = ScriptableObjectUtility.GetAllInstances<ItemDatabase>();
-
-    ItemDatabase itemDB = null;
-    if (databases.Length < 1) {
-        Debug.Log("Creating a new ItemDatabase since none exist.");
-        itemDB = ScriptableObjectUtility.CreateAsset<ItemDatabase>();
-        // ^ Creating an asset if none exist in the project!
-    }
-    else if (databases.Length > 1) {
-        Debug.LogError("Multiple ItemDatabases exist. Please delete the extra(s) and try again.");
-    }
-    else {
-        itemDB = databases[0];
-    }
-
-    return itemDB;
-}
-```
-### `GetAllInstances<T>`
-Returns an array of all Scriptable Object assets of type `T` in the project.
+### `FindAllInstances<T>`
+Returns an array of all assets of a specified type in the project.
 #### Example usage (from [ItemDatabaseUtility.cs](https://github.com/itsschwer/schwer-scripts/blob/master/SchwerScripts/ItemSystem/Editor/ItemDatabaseUtility.cs)):
 ```csharp
 // Return a list of Item instances, omitting those with duplicate ids.
 private static List<Item> GetAllItemAssets() {
     var result = new List<Item>();
 
-    var instances = ScriptableObjectUtility.GetAllInstances<Item>();
+    var instances = AssetsUtility.FindAllAssets<Item>();
     // ^ Get all instances of type Item for sorting!
     var gatheredIDs = new List<int>();
     for (int i = 0; i < instances.Length; i++) {
@@ -75,6 +53,39 @@ private static List<Item> GetAllItemAssets() {
 
     result = result.OrderBy(i => i.id).ToList();
     return result;
+}
+```
+### `FindFirstAsset<T>`
+Returns the first asset found of a specified type in the project.
+
+The function will automatically append ` typeof(T)` if the `filter` argument does not contain the `t:` keyword.
+
+Refer to the official Unity documentation on [`AssetDatabase.FindAssets`](https://docs.unity3d.com/ScriptReference/AssetDatabase.FindAssets.html) for more information on the `filter` argument.
+
+# `ScriptableObjectUtility`
+Editor script intended for working with Scriptable Object assets through code.
+## Methods
+### `CreateAsset<T>`
+Creates a Scriptable Object of type `T` in a process similar to `[CreateAssetMenu]`. 
+#### Example usage (from [ItemDatabaseUtility.cs](https://github.com/itsschwer/schwer-scripts/blob/master/SchwerScripts/ItemSystem/Editor/ItemDatabaseUtility.cs)):
+```csharp
+private static ItemDatabase GetItemDatabase() {
+    var databases = AssetsUtility.FindAllAssets<ItemDatabase>();
+
+    ItemDatabase itemDB = null;
+    if (databases.Length < 1) {
+        Debug.Log("Creating a new ItemDatabase since none exist.");
+        itemDB = ScriptableObjectUtility.CreateAsset<ItemDatabase>();
+        // ^ Creating an asset if none exist in the project!
+    }
+    else if (databases.Length > 1) {
+        Debug.LogError("Multiple ItemDatabases exist. Please delete the extra(s) and try again.");
+    }
+    else {
+        itemDB = databases[0];
+    }
+
+    return itemDB;
 }
 ```
 

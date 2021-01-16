@@ -51,7 +51,7 @@ namespace SchwerEditor.ItemSystem {
         // Also see this: https://stackoverflow.com/questions/56298821/balancing-calls-inside-of-a-editorwindow-ongui-method-causing-problems
         private void Update() {
             //! Should probably only run this line if an Item asset was created or deleted.
-            itemAssets = AssetsUtility.FindAllInstances<Item>().OrderBy(i => i.id).ToArray();
+            itemAssets = AssetsUtility.FindAllAssets<Item>().OrderBy(i => i.id).ToArray();
 
             Repaint();
         }

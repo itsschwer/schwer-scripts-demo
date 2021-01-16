@@ -2,6 +2,9 @@
 using UnityEngine;
 
 namespace SchwerEditor {
+    /// <summary>
+    /// Editor class containing wrapper functions for working with assets.
+    /// </summary>
     public static class AssetsUtility {
         /// <summary>
         /// Wrapper for `AssetDatabase.SaveAssets`, `AssetDatabase.Refresh`, and `EditorUtility.FocusProjectWindow`.
@@ -16,7 +19,7 @@ namespace SchwerEditor {
         /// <summary>
         /// Returns all assets of a specified type from the Assets folder.
         /// </summary>
-        public static T[] FindAllInstances<T>() where T : Object {
+        public static T[] FindAllAssets<T>() where T : Object {
             // From: https://answers.unity.com/questions/1425758/how-can-i-find-all-instances-of-a-scriptable-objec.html
             string[] guids = AssetDatabase.FindAssets("t:" + typeof(T).Name);
 
