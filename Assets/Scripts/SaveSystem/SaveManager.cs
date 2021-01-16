@@ -1,4 +1,5 @@
-﻿using Schwer.ItemSystem;
+﻿using Schwer;
+using Schwer.ItemSystem;
 using UnityEngine;
 
 public class SaveManager : DDOLSingleton<SaveManager> {

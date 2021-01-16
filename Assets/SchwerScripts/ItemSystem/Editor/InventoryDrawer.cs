@@ -3,13 +3,9 @@ using UnityEngine;
 
 namespace SchwerEditor.ItemSystem {
     using Schwer.ItemSystem;
-    
+
     [CustomPropertyDrawer(typeof(Inventory))]
     public class InventoryDrawer : PropertyDrawer {
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => -4;
-        // ^ Reference: https://forum.unity.com/threads/accumulating-empty-space-at-the-top-of-an-array-containing-custompropertydrawer-items.509133/
-        // Otherwise there would be an excessive gap between the script field and where the drawer began.
-
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
             var keys = property.FindPropertyRelative("keys");
             var values = property.FindPropertyRelative("values");
@@ -18,20 +14,30 @@ namespace SchwerEditor.ItemSystem {
                 var warning = "The number of keys does not match the number of values!";
                 var details = $"({keys.arraySize} keys; {values.arraySize} values)";
                 EditorGUILayout.HelpBox(warning + "\n" + details, MessageType.Warning);
+                //! ^ Need to convert from `EditorGUILayout` to `EditorGUI`
             }
 
-            property.isExpanded = EditorGUILayout.Foldout(property.isExpanded, "Contents (" + keys.arraySize + ")", true);
+            var foldoutRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
+            property.isExpanded = EditorGUI.Foldout(foldoutRect, property.isExpanded, "Contents (" + keys.arraySize + ")", true);
 
             if (property.isExpanded) {
                 EditorGUI.BeginDisabledGroup(true);
+
+                var kvpHeight = EditorGUIUtility.singleLineHeight;
+                var kvpSpacing = EditorGUIUtility.standardVerticalSpacing;
+                var halfWidth = position.width / 2;
                 for (int i = 0; i < keys.arraySize; i++) {
-                    EditorGUILayout.BeginHorizontal();
+                    var posY = position.y + ((i + 1) * (kvpHeight + kvpSpacing));
+                    var keyRect = new Rect(position.x, posY, halfWidth, kvpHeight);
+                    var valueRect = new Rect(position.x + halfWidth, posY, halfWidth, kvpHeight);
                     var key = keys.GetArrayElementAtIndex(i);
                     var value = values.GetArrayElementAtIndex(i);
-                    EditorGUILayout.PropertyField(key, GUIContent.none);
-                    EditorGUILayout.PropertyField(value, GUIContent.none);
-                    EditorGUILayout.EndHorizontal();
+                    EditorGUI.PropertyField(keyRect, key, GUIContent.none);
+                    EditorGUI.PropertyField(valueRect, value, GUIContent.none);
+                    GUILayout.Space(kvpHeight + kvpSpacing);
                 }
+                GUILayout.Space(kvpSpacing);
+
                 EditorGUI.EndDisabledGroup();
             }
         }

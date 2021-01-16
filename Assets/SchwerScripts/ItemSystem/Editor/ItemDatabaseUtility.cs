@@ -40,12 +40,12 @@ namespace SchwerEditor.ItemSystem {
             itemDB.Initialise(GetAllItemAssets());
             EditorUtility.SetDirty(itemDB);
 
-            ScriptableObjectUtility.SaveRefreshAndFocus();
+            AssetsUtility.SaveRefreshAndFocus();
             Selection.activeObject = itemDB;
         }
 
         private static ItemDatabase GetItemDatabase() {
-            var databases = ScriptableObjectUtility.GetAllInstances<ItemDatabase>();
+            var databases = AssetsUtility.FindAllInstances<ItemDatabase>();
 
             ItemDatabase itemDB = null;
             if (databases.Length < 1) {
@@ -65,7 +65,7 @@ namespace SchwerEditor.ItemSystem {
         private static List<Item> GetAllItemAssets() {
             var result = new List<Item>();
 
-            var instances = ScriptableObjectUtility.GetAllInstances<Item>();
+            var instances = AssetsUtility.FindAllInstances<Item>();
             var gatheredIDs = new List<int>();
             for (int i = 0; i < instances.Length; i++) {
                 if (gatheredIDs.Contains(instances[i].id)) {

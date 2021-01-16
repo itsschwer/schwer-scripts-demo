@@ -150,7 +150,7 @@ namespace Schwer.ItemSystem {
     }
 
     [Serializable]
-    public sealed class SerializableInventory : Dictionary<int, int> {
+    public class SerializableInventory : Dictionary<int, int> {
         public SerializableInventory() {}
         private SerializableInventory(SerializationInfo information, StreamingContext context) : base(information,context) {}
         // ^ Need to add special constructor for deserialization (since `Dictionary` implements `ISerializable`) to avoid

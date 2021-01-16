@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Schwer;
+using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
 public class MainCamera : MonoBehaviourSingleton<MainCamera> {

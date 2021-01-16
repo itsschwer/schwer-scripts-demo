@@ -5,16 +5,6 @@ using UnityEngine;
 namespace SchwerEditor {
     public static class ScriptableObjectUtility {
         /// <summary>
-        /// Wrapper for `AssetDatabase.SaveAssets`, `AssetDatabase.Refresh`, and `EditorUtility.FocusProjectWindow`.
-        /// </summary>
-        public static void SaveRefreshAndFocus() {
-            //! Need clarification on what each line does.
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-            EditorUtility.FocusProjectWindow();
-        }
-
-        /// <summary>
         /// Creates a new Scriptable Object asset in a manner that mimics Unity's asset creation process.
         /// </summary>
         public static T CreateAsset<T>() where T : ScriptableObject {
@@ -31,24 +21,8 @@ namespace SchwerEditor {
             path = AssetDatabase.GenerateUniqueAssetPath(path + "/" + typeof(T).Name + ".asset");
             
             AssetDatabase.CreateAsset(asset, path);
-            SaveRefreshAndFocus();
+            AssetsUtility.SaveRefreshAndFocus();
             return asset;
-        }
-
-        /// <summary>
-        /// Get all instances of a specified Scriptable Object from the Assets folder.
-        /// </summary>
-        public static T[] GetAllInstances<T>() where T: ScriptableObject {
-            // From: https://answers.unity.com/questions/1425758/how-can-i-find-all-instances-of-a-scriptable-objec.html
-            string[] guids = AssetDatabase.FindAssets("t:" + typeof(T).Name);
-
-            T[] instances = new T[guids.Length];
-            for (int i = 0; i < guids.Length; i++) {
-                string path = AssetDatabase.GUIDToAssetPath(guids[i]);
-                instances[i] = AssetDatabase.LoadAssetAtPath<T>(path);
-            }
-
-            return instances;
         }
     }
 }

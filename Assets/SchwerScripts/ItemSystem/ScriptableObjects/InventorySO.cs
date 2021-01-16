@@ -6,6 +6,8 @@ namespace Schwer.ItemSystem {
         public Inventory value = new Inventory();
 
 #if UNITY_EDITOR
+        // Needed in order to allow changes to the Inventory in the editor to be saved.
+
         private void OnEnable() => value.OnContentsChanged += MarkDirtyIfChanged;
         private void OnDisable() => value.OnContentsChanged -= MarkDirtyIfChanged;
 
