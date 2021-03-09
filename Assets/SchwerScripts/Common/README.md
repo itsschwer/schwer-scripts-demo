@@ -1,7 +1,7 @@
 # schwer-scripts: common
 [![Root](https://img.shields.io/badge/Root-schwer--scripts-blue.svg)](https://github.com/itsschwer/schwer-scripts) [![Donate](https://img.shields.io/badge/Donate-PayPal-brightgreen.svg)](https://www.paypal.com/donate?hosted_button_id=NYFKAS24D4MJS)
 
-A collection of various editor scripts.
+A collection of scripts that are likely to be used in any project.
 
 ## Contents
 * [Singletons (`MonoBehaviourSingleton` & `DDOLSingleton`)](#Singletons)

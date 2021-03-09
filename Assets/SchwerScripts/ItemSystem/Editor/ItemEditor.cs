@@ -49,14 +49,15 @@ namespace SchwerEditor.ItemSystem {
         // OnGUI is supposedly called many times per (render) frame (crude debug logging indicates this *is* the case),
         // so use Update for non-render logic.
         // Also see this: https://stackoverflow.com/questions/56298821/balancing-calls-inside-of-a-editorwindow-ongui-method-causing-problems
-        private void Update() {
-            //! Should probably only run this line if an Item asset was created or deleted.
-            itemAssets = AssetsUtility.FindAllAssets<Item>().OrderBy(i => i.id).ToArray();
-
-            Repaint();
-        }
+        private void Update() => Repaint();
 
         private void OnGUI() {
+            // Only change what should be drawn (for the next frame?) during `Layout` event.
+            if (Event.current.rawType == EventType.Layout) {
+                //! Should probably only run this line if an Item asset was created or deleted.
+                itemAssets = AssetsUtility.FindAllAssets<Item>().OrderBy(i => i.id).ToArray();
+            }
+
             EditorGUILayout.BeginHorizontal();
             selectedItem = DrawItemsSidebar(itemAssets);
             DrawSelectedItem();

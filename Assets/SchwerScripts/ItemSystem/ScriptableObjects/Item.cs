@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 namespace Schwer.ItemSystem {
-    [CreateAssetMenu(menuName = "Scriptable Object/Item System/Item")]
+    [CreateAssetMenu(menuName = "Item System/Item")]
     public class Item : ScriptableObject {
         [SerializeField] private int _id = default;
         public int id => _id;
