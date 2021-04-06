@@ -1,5 +1,5 @@
 # Showcase
-[![Play](https://img.shields.io/badge/Play-itch.io-blueviolet.svg)](https://schwer.itch.io/showcase) [![schwer-scripts](https://img.shields.io/badge/Asset-schwer--scripts-blue.svg)](https://github.com/itsschwer/schwer-scripts) [![Donate](https://img.shields.io/badge/Donate-PayPal-brightgreen.svg)](https://www.paypal.com/donate?hosted_button_id=NYFKAS24D4MJS)
+[![Play](https://img.shields.io/badge/Play-itch.io-blueviolet.svg)](https://schwer.itch.io/showcase) [![schwer-scripts](https://img.shields.io/badge/Asset-schwer--scripts-0366D6.svg)](https://github.com/itsschwer/schwer-scripts) [![Donate](https://img.shields.io/badge/Donate-PayPal-brightgreen.svg)](https://www.paypal.com/donate?hosted_button_id=NYFKAS24D4MJS)
 
 Demonstrating how [**schwer-scripts**](https://github.com/itsschwer/schwer-scripts) could be used. A playable demo is available on [itch.io](https://schwer.itch.io/showcase).
 
