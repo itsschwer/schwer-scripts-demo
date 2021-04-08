@@ -3,23 +3,23 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 public static class BinaryIO {
-    public static SaveData ReadSaveDataFile(string filePath) {
-        BinaryFormatter formatter = new BinaryFormatter();
-        using (FileStream stream = new FileStream(filePath, FileMode.Open)) {
+    public static T ReadFile<T>(string filePath) {
+        var formatter = new BinaryFormatter();
+        using (var stream = new FileStream(filePath, FileMode.Open)) {
             try {
-                return formatter.Deserialize(stream) as SaveData;
+                return (T)(formatter.Deserialize(stream));
             }
-            catch (System.Runtime.Serialization.SerializationException e) {
-                Debug.Log("File at: " + filePath + " is incompatible. " + e);
+            catch (System.Exception e) {
+                Debug.Log("File at '" + filePath + "' is incompatible — " + e);
             }
         }
-        return null;
+        return default(T);
     }
 
-    public static void WriteSaveDataFile(SaveData saveData, string filePath) {
-        BinaryFormatter formatter = new BinaryFormatter();
-        using (FileStream stream = new FileStream(filePath, FileMode.Create)) {
-            formatter.Serialize(stream, saveData);
+    public static void WriteFile<T>(T obj, string filePath) {
+        var formatter = new BinaryFormatter();
+        using (var stream = new FileStream(filePath, FileMode.Create)) {
+            formatter.Serialize(stream, obj);
         }
 
         if (Application.platform == RuntimePlatform.WebGLPlayer) {
