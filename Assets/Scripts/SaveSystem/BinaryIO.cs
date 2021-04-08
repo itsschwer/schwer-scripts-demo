@@ -2,7 +2,7 @@
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-public static class SaveReadWriter {
+public static class BinaryIO {
     public static SaveData ReadSaveDataFile(string filePath) {
         BinaryFormatter formatter = new BinaryFormatter();
         using (FileStream stream = new FileStream(filePath, FileMode.Open)) {

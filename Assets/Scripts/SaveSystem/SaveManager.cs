@@ -12,7 +12,7 @@ public class SaveManager : DDOLSingleton<SaveManager> {
 
     private void Start() {
         if (Application.platform != RuntimePlatform.WebGLPlayer) {
-            LoadSaveData(SaveReadWriter.ReadSaveDataFile(path));
+            LoadSaveData(BinaryIO.ReadSaveDataFile(path));
         }
         else {
             WebGLHelper.ImportEnabled(true);
@@ -23,10 +23,10 @@ public class SaveManager : DDOLSingleton<SaveManager> {
         if (Input.GetButtonDown("Save")) {
             Debug.Log("Saved data to " + path);
             DebugCanvas.Instance.Display("Saving");
-            SaveReadWriter.WriteSaveDataFile(new SaveData(inventory), path);
+            BinaryIO.WriteSaveDataFile(new SaveData(inventory), path);
         }
         else if (Input.GetButtonDown("Load")) {
-            var sd = SaveReadWriter.ReadSaveDataFile(path);
+            var sd = BinaryIO.ReadSaveDataFile(path);
             if (sd != null) {
                 Debug.Log("Loaded data from " + path);
                 DebugCanvas.Instance.Display("Loading");
