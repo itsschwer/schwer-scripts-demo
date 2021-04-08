@@ -5,7 +5,7 @@ using UnityEngine;
 public static class BinaryIO {
     public static T ReadFile<T>(string filePath) {
         var formatter = new BinaryFormatter();
-        using (var stream = new FileStream(filePath, FileMode.Open)) {
+        using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
             try {
                 return (T)(formatter.Deserialize(stream));
             }
@@ -18,7 +18,7 @@ public static class BinaryIO {
 
     public static void WriteFile<T>(T obj, string filePath) {
         var formatter = new BinaryFormatter();
-        using (var stream = new FileStream(filePath, FileMode.Create)) {
+        using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None)) {
             formatter.Serialize(stream, obj);
         }
 
