@@ -1,5 +1,5 @@
 # schwer-scripts: editor
-[![Root](https://img.shields.io/badge/Root-schwer--scripts-blue.svg)](https://github.com/itsschwer/schwer-scripts) [![Donate](https://img.shields.io/badge/Donate-PayPal-brightgreen.svg)](https://www.paypal.com/donate?hosted_button_id=NYFKAS24D4MJS)
+[![Root](https://img.shields.io/badge/Root-schwer--scripts-0366D6.svg)](/../../) [![Donate](https://img.shields.io/badge/Donate-PayPal-brightgreen.svg)](https://www.paypal.com/donate?hosted_button_id=NYFKAS24D4MJS)
 
 A collection of various editor scripts.
 
@@ -31,7 +31,7 @@ Editor script containing wrapper functions for working with assets.
 ## Methods
 ### `FindAllInstances<T>`
 Returns an array of all assets of a specified type in the project.
-#### Example usage (from [ItemDatabaseUtility.cs](https://github.com/itsschwer/schwer-scripts/blob/master/SchwerScripts/ItemSystem/Editor/ItemDatabaseUtility.cs)):
+#### Example usage (from [ItemDatabaseUtility.cs](/schwer-scripts/ItemSystem/Editor/ItemDatabaseUtility.cs)):
 ```csharp
 // Return a list of Item instances, omitting those with duplicate ids.
 private static List<Item> GetAllItemAssets() {
@@ -67,7 +67,7 @@ Editor script intended for working with Scriptable Object assets through code.
 ## Methods
 ### `CreateAsset<T>`
 Creates a Scriptable Object of type `T` in a process similar to `[CreateAssetMenu]`. 
-#### Example usage (from [ItemDatabaseUtility.cs](https://github.com/itsschwer/schwer-scripts/blob/master/SchwerScripts/ItemSystem/Editor/ItemDatabaseUtility.cs)):
+#### Example usage (from [ItemDatabaseUtility.cs](/schwer-scripts/ItemSystem/Editor/ItemDatabaseUtility.cs)):
 ```csharp
 private static ItemDatabase GetItemDatabase() {
     var databases = AssetsUtility.FindAllAssets<ItemDatabase>();
