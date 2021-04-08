@@ -24,6 +24,7 @@ public class SaveManager : DDOLSingleton<SaveManager> {
             Debug.Log("Saved data to " + path);
             DebugCanvas.Instance.Display("Saving");
             BinaryIO.WriteFile<SaveData>(new SaveData(inventory), path);
+            if (Application.platform == RuntimePlatform.WebGLPlayer) WebGLHelper.PushToDownload(path, SaveManager.fileNameAndExtension);
         }
         else if (Input.GetButtonDown("Load")) {
             var sd = BinaryIO.ReadFile<SaveData>(path);

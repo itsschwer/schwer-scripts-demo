@@ -21,9 +21,5 @@ public static class BinaryIO {
         using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None)) {
             formatter.Serialize(stream, obj);
         }
-
-        if (Application.platform == RuntimePlatform.WebGLPlayer) {
-            WebGLHelper.PushToDownload(filePath, SaveManager.fileNameAndExtension);
-        }
     }
 }
