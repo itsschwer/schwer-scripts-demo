@@ -17,7 +17,7 @@ Editor script to improve prefab workflow by adding `Instantiate Prefab` as a men
 1. Add a `public static` function (with `MenuCommand` as a parameter) that calls `InstantiatePrefab`, passing in the `MenuCommand` and the path to the asset.
 2. Add the attribute `[MenuItem("GameObject/Instantiate Prefab/<prefabName (arbitrary)>, false, 0)]` above the function.
 #### Example
-```csharp
+```cs
 [MenuItem("GameObject/Instantiate Prefab/Player", false, 0)]
 public static void InstantiatePlayerPrefab(MenuCommand command) {
     InstantiatePrefab(command, "Assets/Prefabs/Player.prefab");
@@ -27,33 +27,13 @@ public static void InstantiatePlayerPrefab(MenuCommand command) {
 ```
 
 # `AssetsUtility`
-Editor script containing wrapper functions for working with assets.
+An editor-only class containing wrapper functions for working with assets.
 ## Methods
 ### `FindAllInstances<T>`
 Returns an array of all assets of a specified type in the project.
-#### Example usage (from [ItemDatabaseUtility.cs](/schwer-scripts/ItemSystem/Editor/ItemDatabaseUtility.cs)):
-```csharp
-// Return a list of Item instances, omitting those with duplicate ids.
-private static List<Item> GetAllItemAssets() {
-    var result = new List<Item>();
-
-    var instances = AssetsUtility.FindAllAssets<Item>();
-    // ^ Get all instances of type Item for sorting!
-    var gatheredIDs = new List<int>();
-    for (int i = 0; i < instances.Length; i++) {
-        if (gatheredIDs.Contains(instances[i].id)) {
-            var sharedID = result[gatheredIDs.IndexOf(instances[i].id)].name;
-            Debug.LogWarning("'" + instances[i].name + "' was excluded from the ItemDatabase because it shares its ID (" + instances[i].id + ") with '" + sharedID + "'.");
-        }
-        else {
-            result.Add(instances[i]);
-            gatheredIDs.Add(instances[i].id);
-        }
-    }
-
-    result = result.OrderBy(i => i.id).ToList();
-    return result;
-}
+#### Example
+```cs
+var allScriptableObjects = AssetsUtility.FindAllAssets<ScriptableObject>();
 ```
 ### `FindFirstAsset<T>`
 Returns the first asset found of a specified type in the project.
@@ -63,29 +43,30 @@ The function will automatically append ` typeof(T)` if the `filter` argument doe
 Refer to the official Unity documentation on [`AssetDatabase.FindAssets`](https://docs.unity3d.com/ScriptReference/AssetDatabase.FindAssets.html) for more information on the `filter` argument.
 
 # `ScriptableObjectUtility`
-Editor script intended for working with Scriptable Object assets through code.
+An editor-only class for working with Scriptable Object assets through code.
 ## Methods
 ### `CreateAsset<T>`
 Creates a Scriptable Object of type `T` in a process similar to `[CreateAssetMenu]`. 
-#### Example usage (from [ItemDatabaseUtility.cs](/schwer-scripts/ItemSystem/Editor/ItemDatabaseUtility.cs)):
-```csharp
-private static ItemDatabase GetItemDatabase() {
-    var databases = AssetsUtility.FindAllAssets<ItemDatabase>();
+#### Example usage *(from [ScriptableDatabaseUtility.cs](/schwer-scripts/ScriptableDatabase/Editor/ScriptableDatabaseUtility.cs))*
+```cs
+private static TDatabase GetDatabase<TDatabase, TElement>() 
+    where TDatabase : ScriptableDatabase<TElement>
+    where TElement : ScriptableObject {
 
-    ItemDatabase itemDB = null;
+    var databases = AssetsUtility.FindAllAssets<TDatabase>();
+
     if (databases.Length < 1) {
-        Debug.Log("Creating a new ItemDatabase since none exist.");
-        itemDB = ScriptableObjectUtility.CreateAsset<ItemDatabase>();
-        // ^ Creating an asset if none exist in the project!
+        Debug.Log($"Creating a new {typeof(TDatabase).Name} since none exist.");
+        return ScriptableObjectUtility.CreateAsset<TDatabase>();
+        // ^ Creating a new ScriptableObject asset if none exist in the project!
     }
     else if (databases.Length > 1) {
-        Debug.LogError("Multiple ItemDatabases exist. Please delete the extra(s) and try again.");
+        Debug.LogError($"Multiple `{typeof(TDatabase).Name}` exist. Please delete the extra(s) and try again.");
+        return null;
     }
     else {
-        itemDB = databases[0];
+        return databases[0];
     }
-
-    return itemDB;
 }
 ```
 

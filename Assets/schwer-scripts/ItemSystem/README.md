@@ -46,13 +46,13 @@ This window is not necessary, but it does provide a helpful overview of the `Ite
 
 ### Item Database
 This system relies on an `ItemDatabase` for the saving and loading of inventories. A `ItemDatabase` can be created:
-* From the toolbar via `Item System/Generate Item Database`
-* From the `Create` context menu (`Create/Item System/Item Database`).
-* From the Item Editor (button at the bottom labelled `Generate Item Database`)
+* From the toolbar via `Item System/Generate ItemDatabase`
+* From the `Create` context menu (`Create/Item System/ItemDatabase`).
+* From the Item Editor (button at the bottom labelled `Generate ItemDatabase`)
 
 This will create an `ItemDatabase` in the currently selected folder if none exist.
 Otherwise, it will update (regenerate) an existing `ItemDatabase`.
-To regenerate an `ItemDatabase` after editing items, use either of the above methods for creating an `ItemDatabase` or via the Inspector of the `ItemDatabase` asset.
+To regenerate an `ItemDatabase` after editing items, use any of the above methods for creating an `ItemDatabase` or via the Inspector of the `ItemDatabase` asset.
 
 ### Inventory
 Create an `Inventory` asset in a folder of your choice via `Create/Item System/Inventory`.
@@ -66,8 +66,8 @@ Non-editor scripts are in the namespace `Schwer.ItemSystem`, so remember to add 
 
 ### Item Database
 Generate or regenerate by:
-* Menu item `Item System/Generate Item Database`
-* Menu item `Create/Item System/Item Database`
+* Menu item `Item System/Generate ItemDatabase`
+* Menu item `Create/Item System/ItemDatabase`
 * Button in the Item Editor
 * Inspector of an existing `ItemDatabase` asset
 
@@ -101,7 +101,7 @@ This implementation provides a bare-bones script intended to be a base from whic
 
 ### Inventory
 The inventory Scriptable Object (`InventorySO`) can be thought of as a container for an `Inventory`. An `Inventory` can be used in a manner similar to a  `Dictionary<Item, int>`, where `int` represents the number of an `Item` held in the `Inventory`.
-##### Code examples:
+##### Example usage
 ```csharp
 [SerializeField] private InventorySO _inventory = default;
 public Inventory inventory => _inventory.value;
@@ -135,7 +135,7 @@ public void RemoveItem(Item item) {
 
 ## Saving and Loading
 Saving and loading has successfully been done using a `BinaryFormatter` approach *(refer to [`BinaryIO`](/schwer-scripts/Common/NonMono/BinaryIO.cs))*. Ensure that the object you serialize uses `SerializableInventory` and not `Inventory`.
-##### Example code:
+##### Example
 ```csharp
 using Schwer.ItemSystem;
 

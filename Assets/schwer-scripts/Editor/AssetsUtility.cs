@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace SchwerEditor {
     /// <summary>
-    /// Editor class containing wrapper functions for working with assets.
+    /// An editor-only class containing wrapper functions for working with assets.
     /// </summary>
     public static class AssetsUtility {
         /// <summary>
-        /// Wrapper for `AssetDatabase.SaveAssets`, `AssetDatabase.Refresh`, and `EditorUtility.FocusProjectWindow`.
+        /// Wrapper for <c>AssetDatabase.SaveAssets()</c>, <c>AssetDatabase.Refresh()</c>, and <c>EditorUtility.FocusProjectWindow()</c>.
         /// </summary>
         public static void SaveRefreshAndFocus() {
             //! Need clarification on what each line does.
@@ -15,7 +15,7 @@ namespace SchwerEditor {
             AssetDatabase.Refresh();
             EditorUtility.FocusProjectWindow();
         }
-        
+
         /// <summary>
         /// Returns all assets of a specified type from the Assets folder.
         /// </summary>
@@ -44,7 +44,7 @@ namespace SchwerEditor {
             if (guids.Length <= 0) return default(T);
 
             var path = AssetDatabase.GUIDToAssetPath(guids[0]);
-            return AssetDatabase.LoadAssetAtPath(path, typeof(T)) as T;
+            return AssetDatabase.LoadAssetAtPath<T>(path);
         }
     }
 }

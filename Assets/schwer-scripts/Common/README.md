@@ -10,10 +10,10 @@ A collection of scripts that are likely to be used in any project.
 # `BinaryIO`
 Wrapper class containing generic functions for reading and writing binary files.
 
-Does not contain any error checking.
+Does not contain any error checking (e.g. invalid file path).
 
-#### Example usage:
-```csharp
+#### Example usage
+```cs
 public class SaveManager : MonoBehaviourSingleton<SaveManager> {
     private static string filePath => Application.persistentDataPath + "/save.dat";
 
@@ -35,14 +35,14 @@ These classes are *not* self-instantiating (i.e. you must make sure an `Instance
 ## Base Classes
 * `MonoBehaviourSingleton`
 * `DDOLSingleton`
-#### Example usage:
-```csharp
+#### Example usage
+```cs
 public class GameManager : MonoBehaviourSingleton<GameManager> {
     // ^ If your class needs to be marked as `DontDestroyOnLoad`, inherit from `DDOLSingleton` instead.
     public int score;
 }
 ```
-```csharp
+```cs
 public class Jewel : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other) {
         GameManager.Instance.score += 100;

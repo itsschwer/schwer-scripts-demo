@@ -7,7 +7,7 @@ namespace Schwer.IO {
     /// </summary>
     public static class BinaryIO {
         /// <summary>
-        /// Attempts to read the file at `filePath`, returning an object of the specified type.
+        /// Attempts to read the file at <c>filePath</c>, returning an object of the specified type.
         /// </summary>
         public static T ReadFile<T>(string filePath) {
             var formatter = new BinaryFormatter();
@@ -23,7 +23,7 @@ namespace Schwer.IO {
         }
 
         /// <summary>
-        /// Attempts to write `obj` to the file at `filePath`, replacing any existing file.
+        /// Attempts to write <c>obj</c> to the file at <c>filePath</c>, overwriting any existing file.
         /// </summary>
         public static void WriteFile<T>(T obj, string filePath) {
             var formatter = new BinaryFormatter();

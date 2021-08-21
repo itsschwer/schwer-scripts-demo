@@ -17,6 +17,7 @@ namespace Schwer.ItemSystem.Demo {
                 sprite.sprite = item.sprite;
                 sprite.enabled = true;
                 count.text = "x" + itemCount;
+                count.enabled = item.stackable;
             }
             else {
                 Clear();
@@ -27,6 +28,7 @@ namespace Schwer.ItemSystem.Demo {
             item = null;
             sprite.enabled = false;
             sprite.sprite = null;
+            count.enabled = false;
             count.text = "";
         }
 

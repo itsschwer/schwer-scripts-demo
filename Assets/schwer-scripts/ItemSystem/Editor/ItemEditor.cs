@@ -64,7 +64,7 @@ namespace SchwerEditor.ItemSystem {
             EditorGUILayout.EndHorizontal();
 
             if (GUILayout.Button("Generate ItemDatabase")) {
-                ItemDatabaseUtility.GenerateItemDatabase();
+                ItemDatabaseInspector.GenerateDatabase();
             }
         }
 

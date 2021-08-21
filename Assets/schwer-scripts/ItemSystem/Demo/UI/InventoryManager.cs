@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,6 +12,11 @@ namespace Schwer.ItemSystem.Demo {
         [Header("Item Display components")]
         [SerializeField] private Text nameDisplay = default;
         [SerializeField] private Text descriptionDisplay = default;
+
+        [Header("Overflow message")]
+        [SerializeField] private Text overflowLog = default;
+        [SerializeField] private float fadeDuration = 0.5f;
+        private Coroutine runningCoroutine;
 
         private List<ItemSlot> itemSlots = new List<ItemSlot>();
 
@@ -37,6 +42,7 @@ namespace Schwer.ItemSystem.Demo {
         }
 
         private void Initialise() {
+            overflowLog.canvasRenderer.SetAlpha(0);
             UpdateDisplay(null);
             if (inventory != null) {
                 UpdateSlots();
@@ -45,10 +51,10 @@ namespace Schwer.ItemSystem.Demo {
 
         public void UpdateSlots() => UpdateSlots(null, 0);
         private void UpdateSlots(Item item, int count) {
+            var items = GetInventoryList();
             for (int i = 0; i < itemSlots.Count; i++) {
-                if (i < inventory.Count) {
-                    var entry = inventory.ElementAt(i);
-                    itemSlots[i].SetItem(entry.Key, entry.Value);
+                if (i < items.Count) {
+                    itemSlots[i].SetItem(items[i].Item1, items[i].Item2);
                 }
                 else {
                     itemSlots[i].Clear();
@@ -59,6 +65,30 @@ namespace Schwer.ItemSystem.Demo {
             if (current != null) {
                 UpdateDisplay(current.item);
             }
+
+            if (items.Count > itemSlots.Count) {
+                overflowLog.canvasRenderer.SetAlpha(1);
+            }
+            else if (overflowLog.canvasRenderer.GetAlpha() > 0) {
+                HideOverflowMessage();
+            }
+        }
+
+        private List<(Item, int)> GetInventoryList() {
+            var list = new List<(Item, int)>();
+
+            foreach (var entry in inventory) {
+                if (entry.Key.stackable) {
+                    list.Add((entry.Key, entry.Value));
+                }
+                else {
+                    for (int i = 0; i < entry.Value; i++) {
+                        list.Add((entry.Key, 1));
+                    }
+                }
+            }
+
+            return list;
         }
 
         public void UpdateDisplay(Item item) {
@@ -70,6 +100,22 @@ namespace Schwer.ItemSystem.Demo {
                 nameDisplay.text = "";
                 descriptionDisplay.text = "";
             }
+        }
+
+        private void HideOverflowMessage() {
+            if (runningCoroutine != null) {
+                StopCoroutine(runningCoroutine);
+                runningCoroutine = null;
+            }
+            runningCoroutine = StartCoroutine(FadeTextCo());
+        }
+
+        private IEnumerator FadeTextCo() {
+            for (float t = 0; t < fadeDuration; t += Time.unscaledDeltaTime) {
+                overflowLog.canvasRenderer.SetAlpha(1 - (t / fadeDuration));
+                yield return null;
+            }
+            runningCoroutine = null;
         }
     }
 }
