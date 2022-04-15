@@ -6,10 +6,10 @@ A collection of various editor scripts.
 These should always be placed in a folder named `Editor`, as that is a [special folder name](https://docs.unity3d.com/Manual/SpecialFolders.html) that Unity uses to determine which scripts should be stripped from builds.
 
 ## Contents
-* [`PrefabMenu`](#PrefabMenu) (menu items to speed up prefab workflow)
-* [`AssetsUtility`](#AssetsUtility) (work with assets via code)
-* [`ScriptableObjectUtility`](#ScriptableObjectUtility) (work with Scriptable Object assets via code)
-* [`EditorWindowUtility`](#EditorWindowUtility) [not yet documented]
+- [`PrefabMenu`](#PrefabMenu) (menu items to speed up prefab workflow)
+- [`AssetsUtility`](#AssetsUtility) (work with assets via code)
+- [`ScriptableObjectUtility`](#ScriptableObjectUtility) (work with Scriptable Object assets via code)
+- [`EditorWindowUtility`](#EditorWindowUtility) [not yet documented]
 
 # `PrefabMenu`
 Editor script to improve prefab workflow by adding `Instantiate Prefab` as a menu item to the `GameObject` / right-click in Hierarchy menu. Requires light modification for each prefab.

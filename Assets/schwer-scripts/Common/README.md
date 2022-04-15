@@ -4,8 +4,8 @@
 A collection of scripts that are likely to be used in any project.
 
 ## Contents
-* [`BinaryIO`](#BinaryIO) (wrapper for reading and writing binary files)
-* [Singletons (`MonoBehaviourSingleton` & `DDOLSingleton`)](#Singletons)
+- [`BinaryIO`](#BinaryIO) (wrapper for reading and writing binary files)
+- [Singletons (`MonoBehaviourSingleton` & `DDOLSingleton`)](#Singletons)
 
 # `BinaryIO`
 Wrapper class containing generic functions for reading and writing binary files.
@@ -33,8 +33,8 @@ In a situation where there are multiple instances of a class deriving from these
 
 These classes are *not* self-instantiating (i.e. you must make sure an `Instance` exists in the scene before attempting to use it).
 ## Base Classes
-* `MonoBehaviourSingleton`
-* `DDOLSingleton`
+- `MonoBehaviourSingleton`
+- `DDOLSingleton`
 #### Example usage
 ```cs
 public class GameManager : MonoBehaviourSingleton<GameManager> {
