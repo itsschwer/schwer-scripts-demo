@@ -1,10 +1,12 @@
 ﻿using Schwer;
 using Schwer.IO;
 using Schwer.ItemSystem;
+using Schwer.WebGL;
 using UnityEngine;
 
 public class SaveManager : DDOLSingleton<SaveManager> {
-    public const string fileNameAndExtension = "save.showcase";
+    public const string extension = ".showcase";
+    public const string fileNameAndExtension = "save" + extension;
     public static string path => Application.persistentDataPath + "/" + fileNameAndExtension;
 
     [SerializeField] private ItemDatabase itemDatabase = default;
@@ -15,9 +17,6 @@ public class SaveManager : DDOLSingleton<SaveManager> {
         if (Application.platform != RuntimePlatform.WebGLPlayer) {
             LoadSaveData(BinaryIO.ReadFile<SaveData>(path));
         }
-        else {
-            WebGLHelper.ImportEnabled(true);
-        }
     }
 
     private void Update() {
@@ -25,7 +24,7 @@ public class SaveManager : DDOLSingleton<SaveManager> {
             Debug.Log("Saved data to " + path);
             DebugCanvas.Instance.Display("Saving");
             BinaryIO.WriteFile<SaveData>(new SaveData(inventory), path);
-            if (Application.platform == RuntimePlatform.WebGLPlayer) WebGLHelper.PushToDownload(path, SaveManager.fileNameAndExtension);
+            if (Application.platform == RuntimePlatform.WebGLPlayer) WebGLSaveHelper.Download(path, SaveManager.fileNameAndExtension);
         }
         else if (Input.GetButtonDown("Load")) {
             var sd = BinaryIO.ReadFile<SaveData>(path);
@@ -40,6 +39,9 @@ public class SaveManager : DDOLSingleton<SaveManager> {
             DebugCanvas.Instance?.Display("New save loaded");
             LoadSaveData(new SaveData());
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha4)) {
+            WebGLSaveHelper.Import(extension, this.gameObject, ImportBase64String);
+        }
     }
 
     private void LoadSaveData(SaveData sd) {
@@ -50,8 +52,8 @@ public class SaveManager : DDOLSingleton<SaveManager> {
         FindObjectOfType<TradeManager>()?.UpdateSlots();
     }
 
-    public void ImportBase64String(string base64) {
-        var sd = WebGLHelper.SaveDataFromBase64String(base64);
+    private void ImportBase64String(string base64) {
+        var sd = WebGLSaveHelper.FromBase64String<SaveData>(base64);
         if (sd != null) {
             LoadSaveData(sd);
         }
