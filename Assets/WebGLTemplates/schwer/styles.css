@@ -1,0 +1,94 @@
+body {
+    margin: 0;
+    /* Center */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Loading animation adapted from https://codepen.io/aaroniker/pen/omvYNZ */
+
+.progress {
+    --stroke: #333333;
+    --dot: #7766FF;
+    --fill: #FFFFFF;
+    --duration: 6s;
+    --side-length: 60px;
+    --dot-size: 6px;
+    --stroke-width: 8px;
+    --stroke-offset: 1.25;
+    width: var(--side-length);
+    height: var(--side-length);
+
+    position: relative;
+    top: -50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.progress .clip {
+    width: 100%;
+    overflow: hidden;
+    bottom: 0;
+    position: fixed;
+}
+
+.progress .fill {
+    background: var(--fill);
+    width: var(--side-length);
+    height: var(--side-length);
+    border-radius: 10%;
+    bottom: 0;
+    position: absolute;
+}
+
+.progress::after {
+    content: '';
+    width: var(--dot-size);
+    height: var(--dot-size);
+    border-radius: 50%;
+    position: absolute;
+    display: block;
+    background: var(--dot);
+    top: calc(var(--side-length) - var(--dot-size) / 2);
+    left: calc((var(--side-length) - var(--dot-size)) / 2);
+    transform: translate(calc(var(--side-length) / -2), calc(var(--side-length) / -2));
+    animation: dot var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+}
+
+.progress svg {
+    display: block;
+    width: calc(100% * var(--stroke-offset));
+    height: calc(100% * var(--stroke-offset));
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.progress svg rect {
+    fill: none;
+    stroke: var(--stroke);
+    stroke-width: calc(var(--stroke-width) / var(--stroke-offset));
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    stroke-dasharray: 192 64 192 64;
+    stroke-dashoffset: 0;
+    animation: rect var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+}
+
+@keyframes rect {
+    25% { stroke-dashoffset: 64; }
+    50% { stroke-dashoffset: 128; }
+    75% { stroke-dashoffset: 192; }
+    100% { stroke-dashoffset: 256; }
+}
+
+@keyframes dot {
+    25% { transform: translate(0, 0); }
+    50% { transform: translate(calc(var(--side-length) / 2), calc(var(--side-length) / -2)); }
+    75% { transform: translate(0, calc(-1 * var(--side-length))); }
+    100% { transform: translate(calc(var(--side-length) / -2), calc(var(--side-length) / -2)); }
+}
