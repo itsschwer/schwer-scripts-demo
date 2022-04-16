@@ -1,21 +1,24 @@
 ﻿using Schwer;
+using Schwer.IO;
 using Schwer.ItemSystem;
+using Schwer.WebGL;
 using UnityEngine;
 
 public class SaveManager : DDOLSingleton<SaveManager> {
-    public const string fileNameAndExtension = "save.showcase";
+    public const string extension = ".showcase";
+    public const string fileNameAndExtension = "save" + extension;
     public static string path => Application.persistentDataPath + "/" + fileNameAndExtension;
 
     [SerializeField] private ItemDatabase itemDatabase = default;
     [SerializeField] private InventorySO _inventory = default;
     private Inventory inventory => _inventory.value;
 
+    [SerializeField] private KeyCode import = KeyCode.Alpha4;
+    [SerializeField] private KeyCode export = KeyCode.Alpha5;
+
     private void Start() {
         if (Application.platform != RuntimePlatform.WebGLPlayer) {
-            LoadSaveData(SaveReadWriter.ReadSaveDataFile(path));
-        }
-        else {
-            WebGLHelper.ImportEnabled(true);
+            LoadSaveData(BinaryIO.ReadFile<SaveData>(path));
         }
     }
 
@@ -23,10 +26,10 @@ public class SaveManager : DDOLSingleton<SaveManager> {
         if (Input.GetButtonDown("Save")) {
             Debug.Log("Saved data to " + path);
             DebugCanvas.Instance.Display("Saving");
-            SaveReadWriter.WriteSaveDataFile(new SaveData(inventory), path);
+            BinaryIO.WriteFile<SaveData>(new SaveData(inventory), path);
         }
         else if (Input.GetButtonDown("Load")) {
-            var sd = SaveReadWriter.ReadSaveDataFile(path);
+            var sd = BinaryIO.ReadFile<SaveData>(path);
             if (sd != null) {
                 Debug.Log("Loaded data from " + path);
                 DebugCanvas.Instance.Display("Loading");
@@ -38,6 +41,15 @@ public class SaveManager : DDOLSingleton<SaveManager> {
             DebugCanvas.Instance?.Display("New save loaded");
             LoadSaveData(new SaveData());
         }
+
+        if (Application.platform == RuntimePlatform.WebGLPlayer) {
+            if (Input.GetKeyDown(import)) {
+                WebGLSaveHelper.Import(extension, this.gameObject, ImportBase64String);
+            }
+            else if (Input.GetKeyDown(export)) {
+                WebGLSaveHelper.Download(System.IO.File.ReadAllBytes(path), fileNameAndExtension);
+            }
+        }
     }
 
     private void LoadSaveData(SaveData sd) {
@@ -48,8 +60,8 @@ public class SaveManager : DDOLSingleton<SaveManager> {
         FindObjectOfType<TradeManager>()?.UpdateSlots();
     }
 
-    public void ImportBase64String(string base64) {
-        var sd = WebGLHelper.SaveDataFromBase64String(base64);
+    private void ImportBase64String(string base64) {
+        var sd = WebGLSaveHelper.FromBase64String<SaveData>(base64);
         if (sd != null) {
             LoadSaveData(sd);
         }

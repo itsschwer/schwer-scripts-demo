@@ -270,12 +270,7 @@ PlayerSettings:
   m_BuildTargetEnableVuforiaSettings: []
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
-  m_TemplateCustomTags:
-    FOOTER_HEIGHT: 20
-    IMPORT_DATA_FUNCTION_NAME: ImportBase64String
-    IMPORT_DATA_GAME_OBJECT_NAME: SaveManager
-    OPTIMISE_FOR_PIXEL_ART: true
-    SAVE_FILE_EXTENSION: showcase
+  m_TemplateCustomTags: {}
   mobileMTRendering:
     Android: 1
     iPhone: 1
@@ -500,7 +495,7 @@ PlayerSettings:
   webGLDebugSymbols: 0
   webGLEmscriptenArgs: 
   webGLModulesDirectory: 
-  webGLTemplate: PROJECT:Schwer
+  webGLTemplate: PROJECT:schwer
   webGLAnalyzeBuildSize: 0
   webGLUseEmbeddedResources: 0
   webGLCompressionFormat: 1
