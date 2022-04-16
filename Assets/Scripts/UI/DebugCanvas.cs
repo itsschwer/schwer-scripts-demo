@@ -26,6 +26,8 @@ public class DebugCanvas : MonoBehaviourSingleton<DebugCanvas> {
     }
 
     private void Update() {
+        if (Input.GetKeyDown(KeyCode.F11)) Screen.fullScreen = !Screen.fullScreen;
+
         if (Input.GetKeyDown(KeyCode.R)) {
             SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
         }
