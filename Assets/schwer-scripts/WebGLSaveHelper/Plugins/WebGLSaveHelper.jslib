@@ -1,3 +1,4 @@
+// `Pointer_stringify` should be replaced with `UTF8ToString` from Unity 2021.2 onwards!
 mergeInto(LibraryManager.library, {
     Export: function (base64, fileName) {
         // Reference: https://stackoverflow.com/questions/34339593/open-base64-in-new-tab
