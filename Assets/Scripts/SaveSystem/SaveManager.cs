@@ -13,6 +13,9 @@ public class SaveManager : DDOLSingleton<SaveManager> {
     [SerializeField] private InventorySO _inventory = default;
     private Inventory inventory => _inventory.value;
 
+    [SerializeField] private KeyCode import = KeyCode.Alpha4;
+    [SerializeField] private KeyCode export = KeyCode.Alpha5;
+
     private void Start() {
         if (Application.platform != RuntimePlatform.WebGLPlayer) {
             LoadSaveData(BinaryIO.ReadFile<SaveData>(path));
@@ -24,7 +27,6 @@ public class SaveManager : DDOLSingleton<SaveManager> {
             Debug.Log("Saved data to " + path);
             DebugCanvas.Instance.Display("Saving");
             BinaryIO.WriteFile<SaveData>(new SaveData(inventory), path);
-            if (Application.platform == RuntimePlatform.WebGLPlayer) WebGLSaveHelper.Download(path, SaveManager.fileNameAndExtension);
         }
         else if (Input.GetButtonDown("Load")) {
             var sd = BinaryIO.ReadFile<SaveData>(path);
@@ -39,8 +41,14 @@ public class SaveManager : DDOLSingleton<SaveManager> {
             DebugCanvas.Instance?.Display("New save loaded");
             LoadSaveData(new SaveData());
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4)) {
-            WebGLSaveHelper.Import(extension, this.gameObject, ImportBase64String);
+
+        if (Application.platform == RuntimePlatform.WebGLPlayer) {
+            if (Input.GetKeyDown(import)) {
+                WebGLSaveHelper.Import(extension, this.gameObject, ImportBase64String);
+            }
+            else if (Input.GetKeyDown(export)) {
+                WebGLSaveHelper.Download(System.IO.File.ReadAllBytes(path), fileNameAndExtension);
+            }
         }
     }
 
