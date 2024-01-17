@@ -1,5 +1,6 @@
 # schwer-scripts: WebGL save helper
-[![Root](https://img.shields.io/badge/Root-schwer--scripts-0366D6.svg)](/../../) [![Donate](https://img.shields.io/badge/Donate-PayPal-brightgreen.svg)](https://www.paypal.com/donate?hosted_button_id=NYFKAS24D4MJS)
+[![root](https://img.shields.io/badge/docs--root-cornflowerblue.svg)](/../../)
+[![Donate with PayPal](https://img.shields.io/badge/Donate-FFD140?logo=paypal)](https://www.paypal.com/donate?hosted_button_id=NYFKAS24D4MJS)
 
 Helper files for importing and exporting data to and from WebGL builds.
 

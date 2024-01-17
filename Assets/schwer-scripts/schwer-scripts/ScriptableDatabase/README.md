@@ -1,5 +1,6 @@
 # schwer-scripts: scriptable database
-[![Root](https://img.shields.io/badge/Root-schwer--scripts-0366D6.svg)](/../../) [![Donate](https://img.shields.io/badge/Donate-PayPal-brightgreen.svg)](https://www.paypal.com/donate?hosted_button_id=NYFKAS24D4MJS)
+[![root](https://img.shields.io/badge/docs--root-cornflowerblue.svg)](/../../)
+[![Donate with PayPal](https://img.shields.io/badge/Donate-FFD140?logo=paypal)](https://www.paypal.com/donate?hosted_button_id=NYFKAS24D4MJS)
 
 A basic implementation of a database of Scriptable Objects. Useful for creating collections for types of Scriptable Objects, for example, [Items](/schwer-scripts/ItemSystem).
 

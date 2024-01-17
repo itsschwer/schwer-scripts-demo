@@ -1,0 +1,3 @@
+[submodule "Assets/schwer-scripts"]
+	path = Assets/schwer-scripts
+	url = https://github.com/itsschwer/schwer-scripts.git
